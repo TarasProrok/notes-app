@@ -23,10 +23,16 @@ public class NoteService {
     }
 
     public void deleteById(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Note id cannot be null");
+        }
         noteRepository.deleteById(id);
     }
 
     public void update(Note note) {
+        if (note == null) {
+            throw new IllegalArgumentException("Note cannot be null");
+        }
         if (note.getId() == null) {
             throw new IllegalArgumentException("Note id cannot be null");
         }
@@ -38,6 +44,9 @@ public class NoteService {
     }
 
     public Note getById(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Note id cannot be null");
+        }
         return noteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Note not found"));
     }

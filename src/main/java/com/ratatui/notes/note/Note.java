@@ -10,7 +10,6 @@ import lombok.Data;
 @Entity
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String title;
