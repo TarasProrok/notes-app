@@ -28,11 +28,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
+
 	// https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle
 	implementation 'com.puppycrawl.tools:checkstyle:10.12.1'
 
 	implementation 'com.amazonaws:aws-java-sdk:1.12.513'
-
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
