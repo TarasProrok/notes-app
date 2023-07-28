@@ -1,30 +1,74 @@
+NOTES-APP
+==================================================================================================================
 There are two application.properties files in tje project:
-application.properties -> use for DEV and H2 DB;
-application-production.properties -> use for PROD and PostgreSSQL DB.
+
+application.properties            -> use as DEFAULT    for DEV, TEST  build: configuration with H2 DB;
+application-production.properties -> use as PRODUCTION for PRODUCTION build: configuration with PostgreSQL DB
+
+To build application with PRODUCTION profile set -D variable:
+
+1.Add this code in the build.gradle file:
+------------------------------------------------------------------------------------------------------------------
+bootRun {
+jvmArgs = ["-Dspring.profiles.active=production"]
+}
+------------------------------------------------------------------------------------------------------------------
+
+OR
+
+2.Run application with environment variable spring.profiles.active=production in your IDE:
+==================================================================================================================
+
+DB CONNECTION CONFIGURATION AND SET ENVIRONMENT VARIABLES:
+==================================================================================================================
+1.Create environment variables:
+${NOTE_DB_USER}         =>  DB user;
+${NOTE_DB_PASSWORD}     =>  DB password;
+${S3_ACCESS_KEY}        =>  Amazon Web Services Access Key;
+${S3_SECURE_KEY}        =>  Amazon Web Services Secure Key;
+
+Example for Windows, run  CMD and execute commands:
+------------------------------------------------------------------------------------------------------------------
+setx NOTE_DB_USER "user"
+setx NOTE_DB_PASSWORD "12345"
+setx S3_ACCESS_KEY "xxx"
+setx S3_SECURE_KEY "yyy"
+------------------------------------------------------------------------------------------------------------------
+
+Example for Linux, run  SH and execute commands:
+------------------------------------------------------------------------------------------------------------------
+export NOTE_DB_USER='user'
+export NOTE_DB_PASSWORD='12345'
+export S3_ACCESS_KEY 'xxx'
+export S3_SECURE_KEY 'yyy'
+------------------------------------------------------------------------------------------------------------------
 
 For connection use defaults:
 
-DB user = user
-DB password = 12345
+NOTE_DB_USER = user
+NOTE_DB_PASSWORD = 12345
+==================================================================================================================
+
+DOCKER CONFIGURATION:
 
 Для тесту з PostgreSQL базою використовувуйте application-production.properties та створіть і запусть Docker контейнер за інструкцією:
 
 1.Сторити контейнер docker compose за допомогою файлу docker-compose:
 docker-compose up -d
-??? цю команду запускати у директорії з файлом docker-compose.yml наступного змісту:
------------------------------------------------------------------------------------
+Цю команду запускати у директорії з файлом docker-compose.yml наступного змісту:
+------------------------------------------------------------------------------------------------------------------
 version: "3.9"
 services:
-  postgres:
-    image: postgres:13.11-bullseye
-    container_name: note-db-container
-    environment:
-      POSTGRES_DB: "notedb"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "12345"
-    ports:
-      - "5432:5432"
------------------------------------------------------------------------------------
+postgres:
+image: postgres:13.11-bullseye
+container_name: note-db-container
+environment:
+POSTGRES_DB: "notedb"
+POSTGRES_USER: "user"
+POSTGRES_PASSWORD: "12345"
+ports:
+- "5432:5432"
+------------------------------------------------------------------------------------------------------------------
 
 2.Зупинити контейнер з БД:
 docker stop note-db-container
