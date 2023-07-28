@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{fragments/layout}">
+<head>
+  <title>Родина</title>
+</head>
+
+  <div layout:fragment="content" th:remove="tag">
+    <div layout:fragment="content" th:remove="tag">
+      <div class="content-wrapper content">
+        <div class="row ml-auto mr-auto">
+          <div class="col-md-12">
+
+            <section class="content-header">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h1>Моя родина</h1>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <ol class="float-right">
+
+                    </ol>
+                  </div>
+
+                </div>
+              </div><!-- /.container-fluid -->
+            </section>
+
+
+
+            <div class="card card-default mb-2">
+
+              <form action="/note/create" method="post" id="createForm">
+
+                <div class="card-body p-0 m-3">
+                  <div class="bs-stepper-content">
+                    <div class="form-group">
+                      <label for="name">Заголовок</label>
+                      <input type="text" class="form-control form-control-lg" id="name" name="name">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="card-footer">
+                  <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-success">Зберегти</button>
+                  </div>
+                </div>
+
+
+              </form>
+
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
