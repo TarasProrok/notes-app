@@ -36,4 +36,11 @@ public class FamilyService {
     }
 
 
+    public void leaveFamily() {
+
+    }
+
+    public void addFamily() {
+
+    }
 }
