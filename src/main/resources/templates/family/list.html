@@ -15,7 +15,7 @@
         <form action="/family/leave" method="get">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Вийти зі складу сім'ї?</h4>
+              <h4 class="modal-title">Вийти зі складу родини?</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -34,7 +34,7 @@
         <form action="/family/add" method="post">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Приєднання до сім'ї</h4>
+              <h4 class="modal-title">Приєднання до родини</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -66,7 +66,7 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-sm-6">
-                    <h1>Моя родина</h1>
+                    <h2>Моя родина</h2>
                   </div>
 
                   <div class="col-sm-6">
@@ -81,15 +81,15 @@
 
 
 
-              <div th:if="${family==null}">
+              <div class="mb-4" th:if="${family==null}">
                 <button type="button" class="btn btn-primary m-1 btn-lg" data-toggle="modal"
                         data-target="#modal-add">
-                  Приєднатися до сім'ї
+                  Приєднатися до родини
                 </button>
 
                 <button type="button" class="btn btn-primary m-1 btn-lg" data-toggle="modal"
                         data-target="#modal-create">
-                  Створити сім'ю
+                  Створити родину
                 </button>
               </div>
 
@@ -108,18 +108,17 @@
 
                     </p>
 
-                    <button type="button" class="btn btn-primary m-1 btn-lg" data-toggle="modal"
-                            data-target="#modal-leave">
-                      Вийти з сім'ї
-                    </button>
 
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#modal-leave">
+                        Вийти з родини
+                      </button>
+
+                      <button type="button" class="btn btn-success m-1" onclick="window.location.href = '/family/edit';">Редагувати</button>
+                    </div>
                   </div>
                 </div>
               </div>
-
-
-
-
 
 
           </div>

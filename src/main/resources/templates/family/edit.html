@@ -33,13 +33,14 @@
 
             <div class="card card-default mb-2">
 
-              <form action="/note/create" method="post" id="createForm">
+              <form action="/family/edit" method="post" id="createForm">
 
                 <div class="card-body p-0 m-3">
                   <div class="bs-stepper-content">
                     <div class="form-group">
-                      <label for="name">Заголовок</label>
-                      <input type="text" class="form-control form-control-lg" id="name" name="name">
+                      <label for="name">Назва</label>
+                      <input type="text" class="form-control form-control-lg" id="name" name="name"
+                             th:value="${family.title}">
                     </div>
                   </div>
 
@@ -47,7 +48,8 @@
 
                 <div class="card-footer">
                   <div class="btn-group" role="group">
-                    <button type="submit" class="btn btn-success">Зберегти</button>
+                    <button type="button" class="btn btn-primary m-1" onclick="window.location.href = '/family';">Відмова</button>
+                    <button type="submit" class="btn btn-success m-1">Зберегти</button>
                   </div>
                 </div>
 
