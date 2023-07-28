@@ -21,8 +21,8 @@ create table access.users(
 	nickname     varchar(100)  not null,
 	birthday     date,
 	gender_id    numeric(1)    not null default 0,
-	created_date date          not null,
-	updated_date date          not null,
+	created_date date          not null default now(),
+	updated_date date          not null default now(),
 	constraint fk_users_gender foreign key(gender_id) references access.gender(gender_id)
 );
 create unique index ix_users_user_id   on access.users (user_id);
