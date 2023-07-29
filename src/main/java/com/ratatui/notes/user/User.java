@@ -16,9 +16,10 @@ import java.util.UUID;
 public class User {
         @Id
         @Column(name = "user_id")
-        private UUID userId = UUID.randomUUID();
+        @GeneratedValue(strategy = GenerationType.UUID)
+        private UUID userId;
         @Column(name = "username")
-        private String username;
+        private String email;
         @Column(name = "password")
         private String password;
         @Column(name = "enabled")
@@ -28,12 +29,12 @@ public class User {
         @Column(name="birthday")
         private Date birthDate;
         @Column(name="gender_id")
-        private UUID genderId;
+        private int genderId;
         @Column(name="created_date")
         private Date createdDate;
         @Column(name="updated_date")
         private Date updatedDate;
-        @OneToMany (mappedBy = "note_owner", cascade = CascadeType.REMOVE)
+        @OneToMany (mappedBy = "note_owner")
         @ToString.Exclude
         private List<Note> notes;
 //    @Column(name = "user_type") - UserTypes або Authorities

@@ -10,12 +10,12 @@ import java.util.UUID;
 @Data
 public class UserDTO {
     private UUID id;
-    private String username;
+    private String email;
     private String password;
     private boolean isEnable;
     private String nickname;
     private Date birthDate;
-    private UUID genderId;
+    private int genderId;
     private Date updatedDate;
     //    @Column(name = "user_type") - UserTypes або Authorities
     @Enumerated(EnumType.STRING)
