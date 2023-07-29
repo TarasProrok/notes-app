@@ -1,53 +1,43 @@
 package com.ratatui.notes.note;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
+@Data
 @Service
+@RequiredArgsConstructor
 public class NoteService {
-
-    private NoteRepository noteRepository;
-
-    @Autowired
-    public NoteService(NoteRepository noteRepository) {
-        this.noteRepository = noteRepository;
-    }
-
-    public Note add(Note note) {
-        if (note.getId() != null) {
-            throw new IllegalArgumentException("Note id must be null");
-        }
-        return noteRepository.save(note);
-    }
-
-    public void deleteById(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Note id cannot be null");
-        }
-        noteRepository.deleteById(id);
-    }
-
-    public void update(Note note) {
-        if (note == null) {
-            throw new IllegalArgumentException("Note cannot be null");
-        }
-        if (note.getId() == null) {
-            throw new IllegalArgumentException("Note id cannot be null");
-        }
-        noteRepository.save(note);
-    }
+    private final NoteRepository noteRepository;
 
     public List<Note> listAll() {
         return noteRepository.findAll();
     }
 
-    public Note getById(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Note id cannot be null");
-        }
-        return noteRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Note not found"));
+    public List<Note> findAllByNoteOwner(UUID noteOwner) {
+        return noteRepository.findAllByNoteOwner(noteOwner);
+    }
+
+    public Note add(Note note) {
+        return noteRepository.save(note);
+    }
+
+    public void deleteById(UUID id) {
+        noteRepository.deleteById(id);
+    }
+
+    public void update(Note note) {
+        noteRepository.save(note);
+    }
+
+    public Note getById(UUID id) {
+        return noteRepository.getReferenceById(id);
+    }
+
+    public void deleteAll() {
+        noteRepository.deleteAll();
     }
 }

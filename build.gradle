@@ -17,6 +17,11 @@ configurations {
 	}
 }
 
+configurations.all {
+	resolutionStrategy.force "org.antlr:antlr4-runtime:4.10.1"
+	resolutionStrategy.force "org.antlr:antlr4-tool:4.10.1"
+}
+
 repositories {
 	mavenCentral()
 }
@@ -29,6 +34,8 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
 
 	// https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle
 	implementation 'com.puppycrawl.tools:checkstyle:10.12.1'

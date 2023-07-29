@@ -1,14 +1,17 @@
-package com.ratatui.notes.note;
+package com.ratatui.notes.tag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface NoteRepository extends JpaRepository<Note, UUID> {
-    @Query("SELECT u FROM Note u WHERE u.noteOwner = :noteOwner")
-    List<Note> findAllByNoteOwner(UUID noteOwner);
+public interface TagRepository extends JpaRepository<Tag, UUID> {
+
+    @Query("SELECT u FROM Tag u WHERE UPPER(u.title) = UPPER(:title)")
+    List<Tag> findAllByTitle(String title);
+
 }
