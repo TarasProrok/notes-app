@@ -34,10 +34,9 @@ public class UserService {
     public void updateUser(UserDTO userDTO) {
         User user = findUserById(userDTO.getId());
         user.setEmail(userDTO.getEmail());
-        user.setUserType(userDTO.getUserType());
+        user.setAuthorities(userDTO.getAuthorities());
         userRepository.save(user);
     }
-
     public void createNewUser(UserDTO userDTO) {
         User user = new User();
         user.setEmail(user.getEmail());

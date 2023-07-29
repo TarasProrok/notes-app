@@ -1,6 +1,7 @@
 package com.ratatui.notes.user;
 
 
+import com.ratatui.notes.authorities.Authorities;
 import com.ratatui.notes.note.Note;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -39,9 +41,8 @@ public class User {
         @Column(name = "updated_date")
         @UpdateTimestamp
         private Instant updatedDate;
-        @OneToMany (mappedBy = "note_owner")
-        @ToString.Exclude
+        @OneToMany(fetch = FetchType.LAZY, mappedBy="noteOwner")
         private List<Note> notes;
-//    @Column(name = "user_type") - UserTypes або Authorities
-        private UserTypes userType;
+        @OneToMany(fetch = FetchType.LAZY, mappedBy="user")
+        private List<Authorities> authorities;
     }

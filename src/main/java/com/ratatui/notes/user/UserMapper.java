@@ -1,6 +1,6 @@
 package com.ratatui.notes.user;
-
-public class UserMapper implements Mapper <User, UserDTO> {
+import com.ratatui.notes.mapper.Mapper;
+public class UserMapper implements Mapper<User, UserDTO> {
 
     @Override
     public UserDTO mapEntityToDto(User source) throws RuntimeException {
@@ -14,6 +14,7 @@ public class UserMapper implements Mapper <User, UserDTO> {
         target.setEnable(source.isEnable());
         target.setCreatedDate(source.getCreatedDate());
         target.setUpdatedDate(source.getUpdatedDate());
+        target.setAuthorities(source.getAuthorities());
         return target;
     }
 
@@ -30,6 +31,7 @@ public class UserMapper implements Mapper <User, UserDTO> {
         target.setEnable(source.isEnable());
         target.setCreatedDate(source.getCreatedDate());
         target.setUpdatedDate(source.getUpdatedDate());
+        target.setAuthorities(source.getAuthorities());
         return target;
     }
 }

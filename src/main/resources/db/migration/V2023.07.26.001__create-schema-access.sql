@@ -20,7 +20,7 @@ create table access.users(
 	enabled        boolean       not null,
 	nickname       varchar(100)  not null,
 	birthday       date,
-	gender_id      numeric(1)    not null default 0,
+	gender_id      integer       not null default 0,
 	created_date   timestamp,
 	updated_date   timestamp,
 	constraint fk_users_gender foreign key(gender_id) references access.gender(gender_id)
