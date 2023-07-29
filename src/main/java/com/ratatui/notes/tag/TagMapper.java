@@ -1,11 +1,12 @@
 package com.ratatui.notes.tag;
 
 import com.ratatui.notes.mapper.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static java.util.Objects.isNull;
-
+@Component
 public class TagMapper implements Mapper<Tag, TagDto> {
     @Override
     public TagDto mapEntityToDto(Tag source) throws RuntimeException {

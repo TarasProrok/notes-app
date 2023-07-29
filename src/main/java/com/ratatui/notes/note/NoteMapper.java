@@ -1,11 +1,12 @@
 package com.ratatui.notes.note;
 
 import com.ratatui.notes.mapper.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static java.util.Objects.isNull;
-
+@Component
 public class NoteMapper implements Mapper<Note, NoteDto> {
     @Override
     public NoteDto mapEntityToDto(Note source) throws RuntimeException {

@@ -1,6 +1,7 @@
-package com.ratatui.notes.web;
+package com.ratatui.notes.note;
 
 import com.ratatui.notes.note.Note;
+import com.ratatui.notes.note.NoteDto;
 import com.ratatui.notes.note.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,10 @@ public class NoteController {
     private final NoteService noteService;
 
     @PostMapping("/create")
-    public RedirectView createNote(@ModelAttribute Note note){
+    public RedirectView createNote(@ModelAttribute NoteDto noteDto){
         RedirectView redirect = new RedirectView();
         redirect.setUrl("/note/list");
-        noteService.add(note);
+        noteService.add(noteDto);
         return redirect;
     }
 
@@ -33,16 +34,16 @@ public class NoteController {
 
     @GetMapping("/update")
     public String edit(Model model, @RequestParam UUID id){
-        Note note = noteService.getById(id);
-        model.addAttribute("note", note);
+        NoteDto noteDto = noteService.getById(id);
+        model.addAttribute("note", noteDto);
         return ("/note/update");
     }
 
     @PostMapping("/update")
-    public RedirectView editNote(@ModelAttribute Note note){
+    public RedirectView editNote(@ModelAttribute NoteDto noteDto){
         RedirectView redirect = new RedirectView();
         redirect.setUrl("/note/list");
-        noteService.update(note);
+        noteService.update(noteDto);
         return redirect;
     }
 

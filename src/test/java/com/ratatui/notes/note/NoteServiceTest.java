@@ -21,13 +21,13 @@ class NoteServiceTest {
     void addNote() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String expected = "Моя страва № " + sdf.format(new Date().getTime());
-        Note note = new Note();
-        note.setTitle(expected);
-        note.setContent("Сіль Перець Вода Котлети Риба...");
-        note.setNoteOwner(UUID.fromString("2D1EBC5B-7D27-4197-9CF0-E84451C5AAA1"));
-        note.setNoteAccessType("private");
-        Note actualNote = noteService.add(note);
-        String actual = actualNote.getTitle();
+        NoteDto noteDto = new NoteDto();
+        noteDto.setTitle(expected);
+        noteDto.setContent("Сіль Перець Вода Котлети Риба...");
+        noteDto.setNoteOwner(UUID.fromString("2D1EBC5B-7D27-4197-9CF0-E84451C5AAA1"));
+        noteDto.setNoteAccessType("private");
+        NoteDto actualNoteDto = noteService.add(noteDto);
+        String actual = actualNoteDto.getTitle();
         Assertions.assertEquals(expected, actual);
     }
 }

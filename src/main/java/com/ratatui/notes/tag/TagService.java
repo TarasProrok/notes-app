@@ -14,12 +14,14 @@ import static java.util.Objects.isNull;
 @RequiredArgsConstructor
 public class TagService {
     private final TagRepository tagRepository;
+    private final TagMapper tagMapper;
 
     public List<Tag> listAll() {
         return tagRepository.findAll();
     }
 
-    public Tag addIfNotExists(Tag tag) {
+    public Tag addIfNotExists(TagDto tagDto) {
+        Tag tag = tagMapper.mapDtoToEntity(tagDto);
         if (isNull(tag)) return null;
         if (!isNull(tag.getId())) {
             Tag targetTag = tagRepository.getReferenceById(tag.getId());
@@ -43,8 +45,10 @@ public class TagService {
     public void deleteAll() {
         tagRepository.deleteAll();
     }
-    public Tag add(Tag tag) {
-        return tagRepository.save(tag);
+
+    public TagDto add(TagDto tagDto) {
+        Tag tag = tagMapper.mapDtoToEntity(tagDto);
+        return tagMapper.mapEntityToDto(tagRepository.save(tag));
     }
 
 }

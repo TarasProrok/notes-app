@@ -20,9 +20,9 @@ class TagServiceTest {
     void addIfNotExistsIfNotExists() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String expected = "Борщ " + sdf.format(new Date().getTime());
-        Tag tag = new Tag();
-        tag.setTitle(expected);
-        Tag actualTag = tagService.addIfNotExists(tag);
+        TagDto tagDto = new TagDto();
+        tagDto.setTitle(expected);
+        Tag actualTag = tagService.addIfNotExists(tagDto);
         String actual = actualTag.getTitle();
         Assertions.assertEquals(expected, actual);
     }
@@ -30,13 +30,13 @@ class TagServiceTest {
     @Test
     void addIfNotExistsIfAlreadyExists() {
         String dish = "Котлета";
-        Tag tag1 = new Tag();
-        tag1.setTitle(dish);
-        tagService.addIfNotExists(tag1);
+        TagDto tagDto1 = new TagDto();
+        tagDto1.setTitle(dish);
+        tagService.addIfNotExists(tagDto1);
         long expected = tagService.listAll().size();
-        Tag tag2 = new Tag();
-        tag2.setTitle(dish.toUpperCase());
-        tagService.addIfNotExists(tag2);
+        TagDto tagDto2 = new TagDto();
+        tagDto2.setTitle(dish.toUpperCase());
+        tagService.addIfNotExists(tagDto2);
         long actual = tagService.listAll().size();
         Assertions.assertEquals(expected, actual);
     }
