@@ -42,12 +42,12 @@ public class UserService {
         User user = new User();
         user.setEmail(user.getEmail());
         user.setBirthDate(userDTO.getBirthDate());
-        user.setNickname(user.getNickname());
+        user.setNickname(userDTO.getNickname());
         user.setUserId(userDTO.getId());
-        user.setEnable(true);
-        user.setGenderId(user.getGenderId());
-        user.setPassword(user.getPassword());
-        user.setCreatedDate(Date.valueOf(LocalDate.now()));
+        user.setEnable(userDTO.isEnable());
+        user.setGenderId(userDTO.getGenderId());
+        user.setPassword(userDTO.getPassword());
+        user.setCreatedDate(userDTO.getCreatedDate());
         userRepository.save(user);
     }
 }

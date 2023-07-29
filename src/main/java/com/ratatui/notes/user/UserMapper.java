@@ -12,6 +12,8 @@ public class UserMapper implements Mapper <User, UserDTO> {
         target.setBirthDate(source.getBirthDate());
         target.setGenderId(source.getGenderId());
         target.setEnable(source.isEnable());
+        target.setCreatedDate(source.getCreatedDate());
+        target.setUpdatedDate(source.getUpdatedDate());
         return target;
     }
 
@@ -26,6 +28,8 @@ public class UserMapper implements Mapper <User, UserDTO> {
         target.setBirthDate(source.getBirthDate());
         target.setGenderId(source.getGenderId());
         target.setEnable(source.isEnable());
+        target.setCreatedDate(source.getCreatedDate());
+        target.setUpdatedDate(source.getUpdatedDate());
         return target;
     }
 }

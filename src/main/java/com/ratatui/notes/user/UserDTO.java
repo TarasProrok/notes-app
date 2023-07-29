@@ -5,6 +5,7 @@ import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -16,7 +17,8 @@ public class UserDTO {
     private String nickname;
     private Date birthDate;
     private int genderId;
-    private Date updatedDate;
+    private Instant updatedDate;
+    private Instant createdDate;
     //    @Column(name = "user_type") - UserTypes або Authorities
     @Enumerated(EnumType.STRING)
     private UserTypes userType;

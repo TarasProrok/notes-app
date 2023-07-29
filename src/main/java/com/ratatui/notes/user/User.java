@@ -5,8 +5,11 @@ import com.ratatui.notes.note.Note;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,10 +33,12 @@ public class User {
         private Date birthDate;
         @Column(name="gender_id")
         private int genderId;
-        @Column(name="created_date")
-        private Date createdDate;
-        @Column(name="updated_date")
-        private Date updatedDate;
+        @Column(name = "created_date")
+        @CreationTimestamp
+        private Instant createdDate;
+        @Column(name = "updated_date")
+        @UpdateTimestamp
+        private Instant updatedDate;
         @OneToMany (mappedBy = "note_owner")
         @ToString.Exclude
         private List<Note> notes;
