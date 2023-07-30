@@ -1,53 +1,39 @@
 package com.ratatui.notes.note;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.UUID;
+@Data
 @Service
+@RequiredArgsConstructor
 public class NoteService {
+    private final NoteRepository noteRepository;
+    private final NoteMapper noteMapper;
 
-    private NoteRepository noteRepository;
-
-    @Autowired
-    public NoteService(NoteRepository noteRepository) {
-        this.noteRepository = noteRepository;
+    public List<NoteDto> listAll() {
+        return noteMapper.mapEntityToDto(noteRepository.findAll());
     }
 
-    public Note add(Note note) {
-        if (note.getId() != null) {
-            throw new IllegalArgumentException("Note id must be null");
-        }
-        return noteRepository.save(note);
+    public List<NoteDto> findAllByNoteOwner(UUID noteOwner) {
+        return noteMapper.mapEntityToDto(noteRepository.findAllByNoteOwner(noteOwner));
     }
 
-    public void deleteById(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Note id cannot be null");
-        }
+    public NoteDto add(NoteDto noteDto) {
+        return noteMapper.mapEntityToDto(noteRepository.save(noteMapper.mapDtoToEntity(noteDto)));
+    }
+
+    public void deleteById(UUID id) {
         noteRepository.deleteById(id);
     }
 
-    public void update(Note note) {
-        if (note == null) {
-            throw new IllegalArgumentException("Note cannot be null");
-        }
-        if (note.getId() == null) {
-            throw new IllegalArgumentException("Note id cannot be null");
-        }
-        noteRepository.save(note);
+    public void update(NoteDto noteDto) {
+        noteRepository.save(noteMapper.mapDtoToEntity(noteDto));
     }
 
-    public List<Note> listAll() {
-        return noteRepository.findAll();
+    public NoteDto getById(UUID id) {
+        return noteMapper.mapEntityToDto(noteRepository.getReferenceById(id));
     }
-
-    public Note getById(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Note id cannot be null");
-        }
-        return noteRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Note not found"));
-    }
+    public void deleteAll() { noteRepository.deleteAll();}
 }
