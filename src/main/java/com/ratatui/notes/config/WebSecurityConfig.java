@@ -19,10 +19,15 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 authorizeHttpRequests(requests -> {
-                    requests.requestMatchers(new AntPathRequestMatcher("/"), new AntPathRequestMatcher("/about"), new AntPathRequestMatcher("/contacts")).anonymous();
-                    requests.requestMatchers(new AntPathRequestMatcher("/account/**"), new AntPathRequestMatcher("/note/**")).permitAll().anyRequest().authenticated();
+                    requests.requestMatchers(new AntPathRequestMatcher("/"),
+                            new AntPathRequestMatcher("/about/**"),
+                            new AntPathRequestMatcher("/contacts/**"),
+                            new AntPathRequestMatcher("/error/**")).permitAll();
+                    requests.requestMatchers(new AntPathRequestMatcher("/account/**"),
+                            new AntPathRequestMatcher("/note/**")).authenticated().anyRequest();
 
                 }).formLogin((form) -> form
+                        .defaultSuccessUrl("/", true)
                         .loginPage("/login")
                         .permitAll()
                 )
