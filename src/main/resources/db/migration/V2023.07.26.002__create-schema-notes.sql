@@ -60,8 +60,9 @@ create table notes.note_tag (
 );
 
 create unique index ix_note_tag_note_tag_id        on notes.note_tag(note_tag_id);
-create unique index ix_note_tag_note_id            on notes.note_tag(note_id);
-create unique index ix_note_tag_tag_id             on notes.note_tag(tag_id);
+create        index ix_note_tag_note_id            on notes.note_tag(note_id);
+create        index ix_note_tag_tag_id             on notes.note_tag(tag_id);
+create        index ix_note_tag_note_id_u          on notes.note_tag(note_id, tag_id);
 
 comment on table  notes.note_tag               is 'Звязок нотатку з тегами';
 comment on column notes.note_tag.note_tag_id   is 'ID звязку нотатку з тегом';

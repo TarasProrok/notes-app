@@ -21,6 +21,7 @@ public class NoteMapper implements Mapper<Note, NoteDto> {
         target.setNoteAccessType(source.getNoteAccessType());
         target.setCreatedDate(source.getCreatedDate());
         target.setUpdatedDate(source.getUpdatedDate());
+        target.setTagList(source.getTagList());
         return target;
     }
 
@@ -37,14 +38,13 @@ public class NoteMapper implements Mapper<Note, NoteDto> {
         target.setNoteAccessType(source.getNoteAccessType());
         target.setCreatedDate(source.getCreatedDate());
         target.setUpdatedDate(source.getUpdatedDate());
+        target.setTagList(source.getTagList());
         return target;
     }
-
     @Override
     public List<NoteDto> mapEntityToDto(List<Note> source) throws RuntimeException {
         return Mapper.super.mapEntityToDto(source);
     }
-
     @Override
     public List<Note> mapDtoToEntity(List<NoteDto> source) throws RuntimeException {
         return Mapper.super.mapDtoToEntity(source);
