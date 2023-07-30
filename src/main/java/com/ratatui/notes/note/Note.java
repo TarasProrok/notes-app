@@ -1,5 +1,6 @@
 package com.ratatui.notes.note;
 
+import com.ratatui.notes.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,9 @@ public class Note {
     @Pattern(regexp =".{5}|.{10000}")
     @Column(name = "content", length = 10000, nullable = false)
     private String content;
-    @Column(name = "note_owner", nullable = false)
-    private UUID noteOwner;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "note_owner", nullable = false)
+    private User noteOwner;
     @Column(name = "note_access_type", nullable = false)
     private String noteAccessType;
     @Column(name = "created_date")
