@@ -1,5 +1,6 @@
 package com.ratatui.notes.note;
 
+import com.ratatui.notes.tag.Tag;
 import com.ratatui.notes.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.validation.constraints.Pattern;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -40,4 +42,12 @@ public class Note {
     @Column(name = "updated_date")
     @UpdateTimestamp
     private Instant updatedDate;
+    @JoinTable(
+            name = "note_tag",
+            schema = "notes",
+            joinColumns = @JoinColumn(name = "note_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @ManyToMany
+    private List<Tag> tagList;
 }
