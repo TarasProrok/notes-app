@@ -1,8 +1,9 @@
 package com.ratatui.notes.note;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 @Data
@@ -11,6 +12,14 @@ import java.util.UUID;
 public class NoteService {
     private final NoteRepository noteRepository;
     private final NoteMapper noteMapper;
+
+    public Page<NoteDto> findAll(Pageable pageable) {
+        return noteRepository.findAll(pageable).map(this::convertToObjectDto);
+    }
+
+    public NoteDto convertToObjectDto(Note note) {
+        return noteMapper.mapEntityToDto(note);
+    }
 
     public List<NoteDto> listAll() {
         return noteMapper.mapEntityToDto(noteRepository.findAll());
