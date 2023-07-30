@@ -34,9 +34,9 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Увійдіть щоб почати роботу</p>
-      <form class="form-signin" action="/login" method="post">
+      <form th:action="@{/login}" method="post" class="form-signin" >
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="username" name="username" placeholder="Ім'я" autofocus>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Логін" autofocus>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+          <input type="password" id="password" name="password" class="form-control" placeholder="Пароль">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
