@@ -11,11 +11,10 @@
       <div class="row ml-auto mr-auto">
         <div class="col-md-12">
           <div class="row mt-2">
-            <table class="table">
+            <table class="table table-striped">
               <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Edit</th>
                 <th scope="col">Заголовок</th>
                 <th scope="col">Дата створення</th>
                 <th scope="col">Автор</th>
@@ -26,9 +25,8 @@
               <div th:each="note, iStat: ${notePage}">
                 <tr>
                   <th scope="row" th:text="${iStat.index} + 1"></th>
-                  <th><a th:href="@{/note/edit(id=${note.id})}"><img src="img/edit.png" alt=""></a></th>
                   <td><a th:href="@{/note/view(id=${note.id})}"><div  th:text="${note.title}"></div></a></td>
-                  <td th:text="${#temporals.format(note.createdDate, 'dd-MM-yyyy HH:mm')}"></td>
+                  <td th:text="${#temporals.format(note.createdDate, 'dd-MM-yyyy')}"></td>
                   <td></td>
                   <td>
                     <div th:each="tag: ${note.tagList}">

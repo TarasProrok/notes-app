@@ -4,10 +4,30 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{fragments/layout}">
 <head>
-  <title>Створення нотатки</title>
+  <title>Редагування нотатки</title>
 </head>
 
   <div layout:fragment="content" th:remove="tag">
+
+    <div class="modal fade" id="modal-delete">
+      <div class="modal-dialog modal-lg">
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Видалити рецепт?</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+              <button type="button" class="btn btn-success m-1" th:attr="onclick=|window.location.href='/note/delete?id=${note.id}';|">Видалити</button>
+            </div>
+          </div>
+
+      </div>
+    </div>
+
     <div class="content-wrapper content">
       <div class="row ml-auto mr-auto">
         <div class="col-md-12">
@@ -16,7 +36,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-6">
-                  <h2>Створення рецепту</h2>
+                  <h2>Редагування рецепту</h2>
                 </div>
 
                 <div class="col-sm-6">
@@ -33,7 +53,7 @@
 
           <div class="card card-default mb-2">
 
-            <form action="/note/create" method="post" id="createForm">
+            <form action="/note/edit" method="post" id="createForm">
 
               <div class="card-body p-0 m-3">
                 <div class="bs-stepper-content">
@@ -53,6 +73,8 @@
                     <label class="form-check-label" for="publicNote">Публічна</label>
                   </div>
 
+                  <input type="hidden" name="id" th:value="${note.id}">
+
                 </div>
 
               </div>
@@ -60,6 +82,9 @@
               <div class="card-footer">
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-primary m-1" onclick="window.location.href = '/';">Відмова</button>
+                  <button type="button" class="btn btn-warning m-1 btn-lg" data-toggle="modal"
+                          data-target="#modal-delete">Видалити
+                  </button>
                   <button type="submit" class="btn btn-success m-1">Зберегти</button>
                 </div>
               </div>
