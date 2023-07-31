@@ -4,3 +4,4 @@ CREATE TABLE families (
 	code VARCHAR(36) NOT NULL,
 	CONSTRAINT families_pkey PRIMARY KEY (id)
 );
+
