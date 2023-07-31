@@ -21,11 +21,28 @@ public class NoteController {
     private final NoteService noteService;
 
     @PostMapping("/create")
-    public RedirectView createNote(@ModelAttribute NoteDto noteDto){
+    public RedirectView createNote(@RequestParam(value = "title") String title,
+                                   @RequestParam(value = "content") String content,
+                                   @RequestParam(value = "publicNote", required = false) String publicNote){
+        String accessType = "private";
+        if (publicNote != null){
+            accessType = "public";
+        }
+        NoteDto noteDto = new NoteDto();
+        noteDto.setContent(content);
+        noteDto.setTitle(title);
+        noteDto.setNoteAccessType(accessType);
+        noteService.add(noteDto);
+
         RedirectView redirect = new RedirectView();
         redirect.setUrl("/note/list");
-        noteService.add(noteDto);
         return redirect;
+    }
+
+    @GetMapping("/create")
+    public ModelAndView createNoteViewPage(){
+        ModelAndView result = new ModelAndView("/note/create");
+        return result;
     }
 
     @GetMapping("/list")
