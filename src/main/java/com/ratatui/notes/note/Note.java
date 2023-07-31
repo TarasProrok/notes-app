@@ -1,28 +1,53 @@
 package com.ratatui.notes.note;
 
+import com.ratatui.notes.tag.Tag;
+import com.ratatui.notes.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import javax.validation.constraints.Pattern;
+
+import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
-@Data
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "note", schema = "notes")
 public class Note {
     @Id
     @Column(name = "note_id")
-    private UUID id = UUID.randomUUID();
-    @Column(name = "title")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+    @Pattern(regexp =".{5}|.{100}")
+    @Column(name = "title", length = 100, nullable = false)
     private String title;
-    @Column(name = "content")
+    @Pattern(regexp =".{5}|.{10000}")
+    @Column(name = "content", length = 10000, nullable = false)
     private String content;
-    @Column(name = "note_owner")
-    private UUID noteOwner;
-    @Column(name = "note_access_type")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "note_owner", nullable = false)
+    private User noteOwner;
+    @Column(name = "note_access_type", nullable = false)
     private String noteAccessType;
     @Column(name = "created_date")
-    private Date createdDate;
+    @CreationTimestamp
+    private Instant createdDate;
     @Column(name = "updated_date")
-    private Date updatedDate;
+    @UpdateTimestamp
+    private Instant updatedDate;
+    @JoinTable(
+            name = "note_tag",
+            schema = "notes",
+            joinColumns = @JoinColumn(name = "note_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @ManyToMany
+    private List<Tag> tagList;
 }

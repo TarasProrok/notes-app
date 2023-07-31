@@ -1,7 +1,7 @@
 create schema if not exists access;
 
 create table access.gender(
-        gender_id    numeric(1)    primary key,
+    gender_id    numeric(1)    primary key,
 	name_ukr     varchar(50)   not null,
 	name_eng     varchar(50)   not null
 );
@@ -14,15 +14,15 @@ comment  on column access.gender.name_ukr     is 'Найменування ге�
 comment  on column access.gender.name_eng     is 'Найменування гендеру англійською';
 
 create table access.users(
-        user_id      uuid          primary key,
-	username     varchar(50)   not null,
-	password     varchar(500)  not null,
-	enabled      boolean       not null,
-	nickname     varchar(100)  not null,
-	birthday     date,
-	gender_id    numeric(1)    not null default 0,
-	created_date date          not null default now(),
-	updated_date date          not null default now(),
+    user_id        uuid          primary key,
+	username       varchar(50)   not null,
+	password       varchar(500)  not null,
+	enabled        boolean       not null,
+	nickname       varchar(100)  not null,
+	birthday       date,
+	gender_id      integer       not null default 0,
+	created_date   timestamp,
+	updated_date   timestamp,
 	constraint fk_users_gender foreign key(gender_id) references access.gender(gender_id)
 );
 create unique index ix_users_user_id   on access.users (user_id);
