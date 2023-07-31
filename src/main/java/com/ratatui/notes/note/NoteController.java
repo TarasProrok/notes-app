@@ -78,11 +78,35 @@ public class NoteController {
         return ("/note/update");
     }
 
+    @GetMapping("/view")
+    public String view(Model model, @RequestParam UUID id){
+        NoteDto noteDto = noteService.getById(id);
+        model.addAttribute("note", noteDto);
+        return ("/note/view");
+    }
+
     @PostMapping("/edit")
-    public RedirectView editNote(@ModelAttribute NoteDto noteDto){
+    public RedirectView editNote(
+        @RequestParam(value = "id") UUID id,
+        @RequestParam(value = "title") String title,
+        @RequestParam(value = "content") String content,
+        @RequestParam(value = "publicNote", required = false) String publicNote){
+
+
+        String accessType = "private";
+        if (publicNote != null){
+            accessType = "public";
+        }
+        NoteDto noteDto = new NoteDto();
+        noteDto.setId(id);
+        noteDto.setContent(content);
+        noteDto.setTitle(title);
+        noteDto.setNoteAccessType(accessType);
+
+        noteService.update(noteDto);
+
         RedirectView redirect = new RedirectView();
         redirect.setUrl("/note/list");
-        noteService.update(noteDto);
         return redirect;
     }
     @GetMapping("/delete")

@@ -1,7 +1,10 @@
 package com.ratatui.notes.note;
 import com.ratatui.notes.user.UserService;
+import com.ratatui.notes.utils.Helper;
+import java.util.Objects;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,7 +44,10 @@ public class NoteService {
     }
 
     public void update(NoteDto noteDto) {
-        noteRepository.save(noteMapper.mapDtoToEntity(noteDto));
+        NoteDto dto = getById(noteDto.getId());
+        BeanUtils.copyProperties(noteDto, dto, Helper.getNullPropertyNames(noteDto));
+
+        noteRepository.save(noteMapper.mapDtoToEntity(dto));
     }
 
     public NoteDto getById(UUID id) {
