@@ -22,7 +22,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests -> {
                     requests
                             .requestMatchers("/about", "/contacts", "/login")
-                            .anonymous();
+                            .permitAll();
                     requests
                                     .requestMatchers("/").permitAll()
                                     .anyRequest()
@@ -30,9 +30,8 @@ public class WebSecurityConfig {
                         }
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                //.formLogin(a->a.loginPage("/login"))
-                // todo розкоментувати, коли буде сторінка логіна
-                .formLogin(a -> a.defaultSuccessUrl("/note/list").permitAll())
+                .formLogin(a->a.loginPage("/login"))
+                .formLogin(a -> a.defaultSuccessUrl("/",  true).permitAll())
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
     }
