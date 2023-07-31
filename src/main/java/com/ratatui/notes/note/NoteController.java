@@ -1,6 +1,7 @@
 package com.ratatui.notes.note;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ import java.util.stream.IntStream;
 @Controller
 public class NoteController {
     private final NoteService noteService;
+
+    @Value("${note.page.size}")
+    private int defaultPageSize = 10;
 
     @PostMapping("/create")
     public RedirectView createNote(@RequestParam(value = "title") String title,
@@ -50,7 +54,7 @@ public class NoteController {
             @RequestParam(required=false, name="page") Optional<Integer> page,
             @RequestParam(required=false, name="size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(4);
+        int pageSize = size.orElse(defaultPageSize);
         ModelAndView result = new ModelAndView("/note/note");
         Page<NoteDto> notePage = noteService.findAll(PageRequest.of(currentPage - 1, pageSize));
         int totalPages = notePage.getTotalPages();
