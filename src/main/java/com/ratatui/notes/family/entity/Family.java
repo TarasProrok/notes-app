@@ -1,9 +1,9 @@
 package com.ratatui.notes.family.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 /**

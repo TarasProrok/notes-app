@@ -5,7 +5,6 @@ import com.ratatui.notes.family.service.FamilyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -21,7 +20,7 @@ public class FamilyController {
     private final FamilyService familyService;
 
     @GetMapping
-    public ModelAndView getUserFamily(){
+    public ModelAndView getUserFamily() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/list");
 
@@ -37,7 +36,7 @@ public class FamilyController {
     }
 
     @GetMapping("/edit")
-    public ModelAndView editUserFamily(){
+    public ModelAndView editUserFamily() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/edit");
 
@@ -51,7 +50,7 @@ public class FamilyController {
     }
 
     @GetMapping("/leave")
-    public RedirectView leaveFamily(){
+    public RedirectView leaveFamily() {
         familyService.leaveFamily();
 
         RedirectView redirect = new RedirectView();
@@ -60,7 +59,7 @@ public class FamilyController {
     }
 
     @GetMapping("/add")
-    public RedirectView addFamily(){
+    public RedirectView addFamily() {
         familyService.addFamily();
 
         RedirectView redirect = new RedirectView();
