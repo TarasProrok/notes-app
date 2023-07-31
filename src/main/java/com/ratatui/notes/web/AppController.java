@@ -24,4 +24,10 @@ public class AppController {
     public String getAboutPage() {
         return "/pages/about";
     }
+
+    @GetMapping("/login")
+    public String getLoginPage(){return "/user/login";}
+
+    @GetMapping("/account")
+    public String getAccountPage(){return "/user/account";}
 }
