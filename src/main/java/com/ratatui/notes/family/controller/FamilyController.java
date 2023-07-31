@@ -26,37 +26,22 @@ public class FamilyController {
 
     @GetMapping
     public ModelAndView getUserFamily() {
-
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = principal.getUsername();
-        User user = userService.findUserByName(username);
-
+        User user = userService.getCurrentUser();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/list");
-
-       // modelAndView.addObject("family", familyService.getFamilyById(user.get)); //TODO get family id from user
-        Family family = new Family();
-        family.setTitle("Моя сім'я");
-        family.setCode("125і48");
-
-        //family = null;
-
-        modelAndView.addObject("family", family);
+        modelAndView.addObject("family", user.getFamily());
         return modelAndView;
     }
 
     @GetMapping("/edit")
     public ModelAndView editUserFamily() {
+        User user = userService.getCurrentUser();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/edit");
+        modelAndView.addObject("family", user.getFamily());
 
-        //modelAndView.addObject("family", familyService.getFamilyById(null)); //TODO get family id from user
-        Family family = new Family();
-        family.setTitle("Моя сім'я");
-        family.setCode("125і48");
-
-        modelAndView.addObject("family", family);
         return modelAndView;
     }
 

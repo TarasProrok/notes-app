@@ -2,6 +2,8 @@ package com.ratatui.notes.user;
 
 import com.ratatui.notes.note.Note;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,5 +57,11 @@ public class UserService {
         List<Note> notes = user.getNotes();
         user.setNotes(notes);
         return user;
+    }
+
+    public User getCurrentUser(){
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = principal.getUsername();
+        return findUserByName(username);
     }
 }
