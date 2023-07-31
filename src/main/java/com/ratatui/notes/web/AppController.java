@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AppController {
     private final NoteService service;
-
     @GetMapping("/")
     public String getMainPage() {
-        return "/note/list";
+        return "redirect:/note/list";
     }
-
     @GetMapping("/contacts")
     public String getContactsPage() {
         return "/pages/contacts";
@@ -26,4 +24,10 @@ public class AppController {
     public String getAboutPage() {
         return "/pages/about";
     }
+
+    @GetMapping("/login")
+    public String getLoginPage(){return "/user/login";}
+
+    @GetMapping("/account")
+    public String getAccountPage(){return "/user/account";}
 }

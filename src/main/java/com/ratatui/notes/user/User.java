@@ -2,6 +2,7 @@ package com.ratatui.notes.user;
 
 
 import com.ratatui.notes.authorities.Authorities;
+import com.ratatui.notes.family.entity.Family;
 import com.ratatui.notes.note.Note;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -45,4 +46,8 @@ public class User {
         private List<Note> notes;
         @OneToMany(fetch = FetchType.LAZY, mappedBy="user")
         private List<Authorities> authorities;
+        @ManyToOne
+        @JoinColumn(name = "family_id", nullable = false)
+        private Family family;
+
     }

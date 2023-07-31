@@ -1,4 +1,5 @@
 package com.ratatui.notes.note;
+import com.ratatui.notes.user.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import java.util.UUID;
 public class NoteService {
     private final NoteRepository noteRepository;
     private final NoteMapper noteMapper;
+    private final UserService userService;
 
     public Page<NoteDto> findAll(Pageable pageable) {
         return noteRepository.findAll(pageable).map(this::convertToObjectDto);
@@ -30,6 +32,7 @@ public class NoteService {
     }
 
     public NoteDto add(NoteDto noteDto) {
+        noteDto.setNoteOwner(userService.getCurrentUser());
         return noteMapper.mapEntityToDto(noteRepository.save(noteMapper.mapDtoToEntity(noteDto)));
     }
 
