@@ -20,7 +20,7 @@ public class WebSecurityConfig {
         http.cors().disable().csrf().disable()
                 .authorizeHttpRequests(requests -> {
                     requests
-                            .requestMatchers("/about", "/contacts", "/login")
+                            .requestMatchers("/about", "/contacts", "/login", "/img/**", "/css/**")
                             .permitAll();
                     requests
                                     .requestMatchers("/").permitAll()
