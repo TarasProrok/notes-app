@@ -2,10 +2,10 @@ package com.ratatui.notes.user;
 
 import com.ratatui.notes.note.Note;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -37,6 +37,7 @@ public class UserService {
         user.setAuthorities(userDTO.getAuthorities());
         userRepository.save(user);
     }
+
     public void createNewUser(UserDTO userDTO) {
         User user = new User();
         user.setEmail(user.getEmail());
@@ -48,5 +49,19 @@ public class UserService {
         user.setPassword(userDTO.getPassword());
         user.setCreatedDate(userDTO.getCreatedDate());
         userRepository.save(user);
+    }
+
+    public User findUserByName(String userName) {
+        User user = userRepository.findByEmail(userName).orElseThrow(() ->
+                new NoSuchElementException("User with email: [" + userName + "] does not exist!"));
+        List<Note> notes = user.getNotes();
+        user.setNotes(notes);
+        return user;
+    }
+
+    public User getCurrentUser(){
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = principal.getUsername();
+        return findUserByName(username);
     }
 }

@@ -39,17 +39,17 @@
                 <div class="bs-stepper-content">
                   <div class="form-group">
                     <label for="title">Заголовок</label>
-                    <input type="text" class="form-control form-control-lg" id="title" name="title">
+                    <input type="text" class="form-control form-control-lg" id="title" name="title" th:value="${note.title}">
                   </div>
 
                   <div class="form-group">
                     <label for="summernote">Вміст</label>
-                    <textarea rows="10" class="form-control form-control-lg" id="summernote" name="content">
+                    <textarea rows="10" class="form-control form-control-lg" id="summernote" name="content" th:text="${note.content}">
                     </textarea>
                   </div>
 
                   <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="publicNote" name="publicNote">
+                    <input type="checkbox" class="form-check-input" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}">
                     <label class="form-check-label" for="publicNote">Публічна</label>
                   </div>
 

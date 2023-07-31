@@ -29,7 +29,7 @@
                   <th><a th:href="@{/note/edit(id=${note.id})}"><img src="img/edit.png" alt=""></a></th>
                   <td><a th:href="@{/note/view(id=${note.id})}"><div  th:text="${note.title}"></div></a></td>
                   <td th:text="${#temporals.format(note.createdDate, 'dd-MM-yyyy HH:mm')}"></td>
-                  <td th:text="${note.noteOwner.nickname}"></td>
+                  <td></td>
                   <td>
                     <div th:each="tag: ${note.tagList}">
                     <span class="badge badge-pill badge-info"><div th:text="${tag.title}"></div></span>

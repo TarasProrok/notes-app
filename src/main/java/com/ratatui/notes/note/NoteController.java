@@ -1,6 +1,7 @@
 package com.ratatui.notes.note;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,32 @@ import java.util.stream.IntStream;
 public class NoteController {
     private final NoteService noteService;
 
+    @Value("${note.page.size}")
+    private int defaultPageSize = 10;
+
     @PostMapping("/create")
-    public RedirectView createNote(@ModelAttribute NoteDto noteDto){
+    public RedirectView createNote(@RequestParam(value = "title") String title,
+                                   @RequestParam(value = "content") String content,
+                                   @RequestParam(value = "publicNote", required = false) String publicNote){
+        String accessType = "private";
+        if (publicNote != null){
+            accessType = "public";
+        }
+        NoteDto noteDto = new NoteDto();
+        noteDto.setContent(content);
+        noteDto.setTitle(title);
+        noteDto.setNoteAccessType(accessType);
+        noteService.add(noteDto);
+
         RedirectView redirect = new RedirectView();
         redirect.setUrl("/note/list");
-        noteService.add(noteDto);
         return redirect;
+    }
+
+    @GetMapping("/create")
+    public ModelAndView createNoteViewPage(){
+        ModelAndView result = new ModelAndView("/note/create");
+        return result;
     }
 
     @GetMapping("/list")
@@ -33,7 +54,7 @@ public class NoteController {
             @RequestParam(required=false, name="page") Optional<Integer> page,
             @RequestParam(required=false, name="size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(4);
+        int pageSize = size.orElse(defaultPageSize);
         ModelAndView result = new ModelAndView("/note/note");
         Page<NoteDto> notePage = noteService.findAll(PageRequest.of(currentPage - 1, pageSize));
         int totalPages = notePage.getTotalPages();
