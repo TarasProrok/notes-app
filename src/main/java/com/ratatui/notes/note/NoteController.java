@@ -43,10 +43,10 @@ public class NoteController {
         noteDto.setContent(content);
         noteDto.setTitle(title);
         noteDto.setNoteAccessType(accessType);
-        noteService.add(noteDto);
+        NoteDto saveDto = noteService.add(noteDto);
 
         RedirectView redirect = new RedirectView();
-        redirect.setUrl("/note/list");
+        redirect.setUrl("/note/view?id=" + saveDto.getId());
         return redirect;
     }
 
