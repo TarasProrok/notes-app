@@ -58,6 +58,7 @@ public class AppController {
         gender.put(9, "Не застосовується");
 
         result.addObject("user", userDTO);
+        result.addObject("family", userDTO.getFamily());
         result.addObject("gender", gender);
         return result;
     }

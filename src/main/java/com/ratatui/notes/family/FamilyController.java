@@ -5,7 +5,9 @@ import com.ratatui.notes.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -46,16 +48,36 @@ public class FamilyController {
         familyService.leaveFamily();
 
         RedirectView redirect = new RedirectView();
-        redirect.setUrl("/family");
+        redirect.setUrl("/account");
         return redirect;
     }
 
-    @GetMapping("/add")
-    public RedirectView addFamily() {
-        familyService.addFamily();
+    @PostMapping("/add")
+    public RedirectView addFamily(@RequestParam(value = "code") String code) {
+        Family familyByCode = familyService.getFamilyByCode(code);
+        familyService.addFamily(familyByCode);
 
         RedirectView redirect = new RedirectView();
-        redirect.setUrl("/family");
+        redirect.setUrl("/account");
+        return redirect;
+    }
+
+    @GetMapping("/create")
+    public ModelAndView createFamilyShowPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("family/create");
+
+        return modelAndView;
+    }
+
+    @PostMapping("/create")
+    public RedirectView createFamily(@RequestParam(value = "title") String title) {
+        FamilyResponseDto familyResponseDto = familyService.createFamily(title);
+        Family familyByCode = familyService.getFamilyByCode(familyResponseDto.getCode());
+        familyService.addFamily(familyByCode);
+
+        RedirectView redirect = new RedirectView();
+        redirect.setUrl("/account");
         return redirect;
     }
 }

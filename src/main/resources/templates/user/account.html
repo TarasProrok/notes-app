@@ -9,6 +9,51 @@
 <div layout:fragment="content" th:remove="tag">
     <div class="content-wrapper content">
 
+        <div class="modal fade" id="modal-leave">
+            <div class="modal-dialog modal-lg">
+                <form action="/family/leave" method="get">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Вийти зі складу родини?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                            <button type="submit" class="btn btn-success">Вийти</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-add">
+            <div class="modal-dialog modal-lg">
+                <form action="/family/add" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Приєднання до родини</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="code">Код</label>
+                                <input type="text" class="form-control form-control-lg" id="code" name="code"
+                                       placeholder="Введіть код сім'ї в яку бажаєте приєднатися">
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                            <button type="submit" class="btn btn-success">Приєднатися</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
 
         <div class="row ml-auto mr-auto">
             <div class="col-md-12 mb-4">
@@ -69,6 +114,51 @@
                     </div>
 
                 </form>
+
+            </div>
+        </div>
+
+        <div class="row ml-auto mr-auto">
+            <div class="col-md-12">
+
+                <div class="mb-4" th:if="${family==null}">
+                    <button type="button" class="btn btn-primary m-1" data-toggle="modal"
+                            data-target="#modal-add">
+                        Приєднатися до родини
+                    </button>
+
+                    <button type="button" class="btn btn-success m-1" onclick="window.location.href = '/family/create';">
+                        Створити родину
+                    </button>
+                </div>
+
+                <div th:if="${family!=null}">
+                    <div class="card mb-4">
+                        <h5 class="card-header" th:text="${family.title}"></h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Склад</h5>
+                            <p class="card-text">
+
+                            <ul class="list-group">
+                                <li class="list-group-item">Гапонов Андрій</li>
+                                <li class="list-group-item">Гапонова Любов</li>
+                                <li class="list-group-item">Синиця Зинаїда</li>
+                            </ul>
+
+                            </p>
+
+
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#modal-leave">
+                                    Вийти з родини
+                                </button>
+
+                                <button type="button" class="btn btn-success m-1" onclick="window.location.href = '/family/edit';">Редагувати</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </div>

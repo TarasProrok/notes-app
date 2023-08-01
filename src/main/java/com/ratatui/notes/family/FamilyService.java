@@ -1,12 +1,15 @@
 package com.ratatui.notes.family;
 
-import com.ratatui.notes.family.Family;
-import com.ratatui.notes.family.FamilyRepository;
+import com.ratatui.notes.user.User;
+import com.ratatui.notes.user.UserMapper;
+import com.ratatui.notes.user.UserService;
+import com.ratatui.notes.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -18,6 +21,9 @@ import java.util.UUID;
 public class FamilyService {
 
     private final FamilyRepository familyRepository;
+    private final FamilyMapper familyMapper;
+    private final UserService userService;
+    private final UserMapper userMapper;
 
     public Family getFamilyByCode(String code){
         Optional<Family> optional = familyRepository.findByCode(code);
@@ -37,10 +43,21 @@ public class FamilyService {
 
 
     public void leaveFamily() {
-
+        User currentUser = userService.getCurrentUser();
+        currentUser.setFamily(null);
+        userService.updateUser(userMapper.mapEntityToDto(currentUser));
     }
 
-    public void addFamily() {
+    public void addFamily(Family family) {
+        User currentUser = userService.getCurrentUser();
+        currentUser.setFamily(family);
+        userService.updateUser(userMapper.mapEntityToDto(currentUser));
+    }
 
+    public FamilyResponseDto createFamily(String title) {
+        Family family = Family.builder().title(title).build();
+        family.setCode(Helper.getRandomString(5));
+        familyRepository.save(family);
+        return familyMapper.mapEntityToDto(family);
     }
 }
