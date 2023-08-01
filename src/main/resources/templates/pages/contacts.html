@@ -1,60 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{fragments/layout}">
 <head>
-  <title>Контакти</title>
+    <title>Контакти</title>
 </head>
 
-  <div layout:fragment="content" th:remove="tag">
-    <div class="content-wrapper">
+<div layout:fragment="content" th:remove="tag">
+    <div class="content-wrapper content">
 
-      <div class="text-center">
-        <h3>Над проектом працювали</h3>
-      </div>
+        <div class="row ml-auto mr-auto">
+            <div class="col-md-12 mb-4">
+
+                <div class="text-center">
+                    <h3>Наша команда</h3>
+                </div>
 
 
+                <div class="card-deck">
 
-      <div class="card-deck">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top"
+                             src="https://media.licdn.com/dms/image/D5603AQFcBze7dZrMpA/profile-displayphoto-shrink_200_200/0/1690885680322?e=1696464000&v=beta&t=cL3_0nvua5AS1ouAXpi1o05vSPpd_WdzJ6Jx4NPck04"
+                             alt="Anna Mamysheva">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a href="https://www.linkedin.com/in/anna-mamysheva-735480286/">
+                                    Anna Mamysheva
+                                </a>
+                            </p>
+                        </div>
+                    </div>
 
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="https://media.licdn.com/dms/image/D5635AQFc1Gr8IeSwyQ/profile-framedphoto-shrink_200_200/0/1690879083423?e=1691488800&v=beta&t=u2yzfOQ9zHejK4WHkf1Yo0gLbbM-baBa4KbEkuLuoO0" alt="Andriy Gaponov">
-          <div class="card-body">
-            <p class="card-text">
-              <a href="https://www.linkedin.com/in/taras-prorok/">
-                Тарас Пророк
-              </a>
-            </p>
-          </div>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top"
+                             src="https://media.licdn.com/dms/image/D4E03AQE5UpsqsKH7oQ/profile-displayphoto-shrink_200_200/0/1685821733944?e=1696464000&v=beta&t=Y28SCTH1jnI5UbAMHsIRqgat9D2rm8ezBZxfgxNqCqA"
+                             alt="Vasiliy Pykhteev">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a href="https://www.linkedin.com/in/bit-to-bit/">
+                                    Vasiliy Pykhteev
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top"
+                             src="https://media.licdn.com/dms/image/D5635AQFc1Gr8IeSwyQ/profile-framedphoto-shrink_200_200/0/1690879083423?e=1691488800&v=beta&t=u2yzfOQ9zHejK4WHkf1Yo0gLbbM-baBa4KbEkuLuoO0"
+                             alt="Тарас Пророк">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a href="https://www.linkedin.com/in/taras-prorok/">
+                                    Тарас Пророк
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top"
+                             src="https://media.licdn.com/dms/image/C5603AQEO1GakocMzPg/profile-displayphoto-shrink_200_200/0/1574144259852?e=1696464000&v=beta&t=1tkcsst6LqjdubHl7UJQGyJ_paZ80qG6UZjh4Nxbtm0"
+                             alt="Roman Sharun ">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a href="https://www.linkedin.com/in/roman-sharun-12b295165/">
+                                    Roman Sharun
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top"
+                             src="https://media.licdn.com/dms/image/D4E03AQGmt4_DnHjZBA/profile-displayphoto-shrink_200_200/0/1685176266239?e=1696464000&v=beta&t=coiiIDKd46iqQ9fnDUin3LGVI-gqxN_azXi4QKzG4E4"
+                             alt="Andriy Gaponov">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a href="https://www.linkedin.com/in/andriy-gaponov/">
+                                    Andriy Gaponov
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
 
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="https://media.licdn.com/dms/image/C5603AQEO1GakocMzPg/profile-displayphoto-shrink_200_200/0/1574144259852?e=1696464000&v=beta&t=1tkcsst6LqjdubHl7UJQGyJ_paZ80qG6UZjh4Nxbtm0" alt="Roman Sharun ">
-        <div class="card-body">
-          <p class="card-text">
-            <a href="https://www.linkedin.com/in/roman-sharun-12b295165/">
-              Roman Sharun
-            </a>
-          </p>
-        </div>
-      </div>
-
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="https://media.licdn.com/dms/image/D4E03AQGmt4_DnHjZBA/profile-displayphoto-shrink_200_200/0/1685176266239?e=1696464000&v=beta&t=coiiIDKd46iqQ9fnDUin3LGVI-gqxN_azXi4QKzG4E4" alt="Andriy Gaponov">
-        <div class="card-body">
-          <p class="card-text">
-            <a href="https://www.linkedin.com/in/andriy-gaponov/">
-              Andriy Gaponov
-            </a>
-          </p>
-        </div>
-      </div>
-
-      </div>
 
     </div>
-  </div>
+</div>
 
 </body>
 </html>
