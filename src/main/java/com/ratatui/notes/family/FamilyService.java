@@ -4,6 +4,7 @@ import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserMapper;
 import com.ratatui.notes.user.UserService;
 import com.ratatui.notes.utils.Helper;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,8 +55,24 @@ public class FamilyService {
 
     public FamilyResponseDto createFamily(String title) {
         Family family = Family.builder().title(title).build();
-        family.setCode(Helper.getRandomString(5));
+        family.setCode(getNewFamilyCode());
         familyRepository.save(family);
         return familyMapper.mapEntityToDto(family);
+    }
+
+    public void updateFamily(UUID id, String title) {
+        Family familyById = getFamilyById(id);
+        familyById.setTitle(title);
+        familyRepository.save(familyById);
+    }
+
+    private String getNewFamilyCode(){
+        String newCode = Helper.getRandomString(10);
+        try {
+            getFamilyByCode(newCode);
+        } catch (Exception e){
+            return newCode;
+        }
+        return getNewFamilyCode();
     }
 }

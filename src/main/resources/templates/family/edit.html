@@ -22,11 +22,13 @@
 
               <form action="/family/edit" method="post" id="createForm">
 
+                <input type="hidden" name="id" th:value="${family.id}">
+
                 <div class="card-body p-0 m-3">
                   <div class="bs-stepper-content">
                     <div class="form-group">
-                      <label for="name">Назва</label>
-                      <input type="text" class="form-control form-control-lg" id="name" name="name"
+                      <label for="title">Назва</label>
+                      <input type="text" class="form-control form-control-lg" id="title" name="title"
                              th:value="${family.title}">
                     </div>
                   </div>

@@ -1,5 +1,6 @@
 package com.ratatui.notes.user;
 
+import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
 import com.ratatui.notes.note.NoteDto;
 import com.ratatui.notes.utils.Helper;
@@ -21,6 +22,10 @@ public class UserService {
 
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    public List<User> getFamilyUsers(Family family){
+        return userRepository.findAllByFamily(family);
     }
 
     public void deleteUserById(UUID id) {

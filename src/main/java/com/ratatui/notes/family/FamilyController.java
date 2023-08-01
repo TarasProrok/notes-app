@@ -2,6 +2,7 @@ package com.ratatui.notes.family;
 
 import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserService;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,7 @@ public class FamilyController {
     }
 
     @GetMapping("/edit")
-    public ModelAndView editUserFamily() {
+    public ModelAndView editUserFamilyShowPage() {
         User user = userService.getCurrentUser();
 
         ModelAndView modelAndView = new ModelAndView();
@@ -41,6 +42,16 @@ public class FamilyController {
         modelAndView.addObject("family", user.getFamily());
 
         return modelAndView;
+    }
+
+    @PostMapping("/edit")
+    public RedirectView editUserFamily(@RequestParam(value = "id") UUID id,
+        @RequestParam(value = "title") String title) {
+        familyService.updateFamily(id, title);
+
+        RedirectView redirect = new RedirectView();
+        redirect.setUrl("/account");
+        return redirect;
     }
 
     @GetMapping("/leave")
@@ -54,11 +65,14 @@ public class FamilyController {
 
     @PostMapping("/add")
     public RedirectView addFamily(@RequestParam(value = "code") String code) {
-        Family familyByCode = familyService.getFamilyByCode(code);
-        familyService.addFamily(familyByCode);
-
         RedirectView redirect = new RedirectView();
-        redirect.setUrl("/account");
+        try {
+            Family familyByCode = familyService.getFamilyByCode(code);
+            familyService.addFamily(familyByCode);
+            redirect.setUrl("/account");
+        } catch (IllegalArgumentException e){
+            redirect.setUrl("/error/404");
+        }
         return redirect;
     }
 

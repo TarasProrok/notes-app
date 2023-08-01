@@ -136,13 +136,11 @@
                     <div class="card mb-4">
                         <h5 class="card-header" th:text="${family.title} + ' (' + ${family.code}+')'"></h5>
                         <div class="card-body">
-                            <h5 class="card-title">Склад</h5>
+
                             <p class="card-text">
 
-                            <ul class="list-group">
-                                <li class="list-group-item">Гапонов Андрій</li>
-                                <li class="list-group-item">Гапонова Любов</li>
-                                <li class="list-group-item">Синиця Зинаїда</li>
+                            <ul th:each="userFamily: ${usersFamilyDtos}" class="list-group">
+                                <li class="list-group-item" th:text="${userFamily.nickname}" />
                             </ul>
 
                             </p>
