@@ -20,36 +20,45 @@
                 <form action="/user/edit" method="post">
                     <input type="hidden" name="oldEmail" th:value="${user.email}">
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"
-                               placeholder="email" th:value="${user.email}">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="email" th:value="${user.email}">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="password">Пароль</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Введіть новий пароль, якщо хочете його змінити">
+                        </div>
+
                     </div>
 
-                    <div class="form-group">
-                        <label for="password">Пароль</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                               placeholder="Введіть новий пароль, якщо хочете його змінити">
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label for="nickname">Ім'я</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname"
+                                   placeholder="" th:value="${user.nickname}">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="birthDate">Дата народження</label>
+                            <input type="date" id="birthDate" name="birthDate" class="form-control"
+                                   th:value="${user.birthDate}"
+                                   min="1900-01-01">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="nickname">Ім'я</label>
-                        <input type="text" class="form-control" id="nickname" name="nickname"
-                               placeholder="" th:value="${user.nickname}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="birthDate">Дата народження</label>
-                    <input type="date" id="birthDate" name="birthDate"
-                           th:value="${user.birthDate}"
-                           min="1900-01-01">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="gender">Стать</label>
-                        <select name="gender" class="form-control" id="gender">
-                            <option th:each="entry : ${gender.entrySet()}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.key==user.genderId}"></option>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="gender">Стать</label>
+                            <select name="gender" class="form-control" id="gender">
+                                <option th:each="entry : ${gender.entrySet()}" th:value="${entry.key}"
+                                        th:text="${entry.value}" th:selected="${entry.key==user.genderId}"></option>
+                            </select>
+                        </div>
                     </div>
 
 
