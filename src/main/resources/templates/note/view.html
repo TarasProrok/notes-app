@@ -60,6 +60,10 @@
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-primary m-1" onclick="window.location.href = '/';">Закрити</button>
                   <button type="button" class="btn btn-primary m-1" th:attr="onclick=|window.location.href='/note/edit?id=${note.id}';|">Редагувати</button>
+                  <form method="post" th:action="@{/note/share/{id}(id=${note.id})}">
+                    <input type="hidden" name="id" th:value="${note.id}">
+                    <button class="btn btn-success m-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Копіювати посилання">Копіювати посилання</button>
+                  </form>
                 </div>
               </div>
 

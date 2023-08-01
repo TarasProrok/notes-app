@@ -7,3 +7,11 @@ body {
   background: rgba(255,255,255,.9);
   font-size: 1.2rem;
 }
+
+.logo {
+  height:40px;
+}
+
+.header-menu{
+    font-size: 1.2rem;
+}

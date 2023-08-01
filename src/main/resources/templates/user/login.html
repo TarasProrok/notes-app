@@ -10,15 +10,15 @@
 <div layout:fragment="content" th:remove="tag">
   <div class="content-wrapper content">
 
-    <div class="container mt-4">
+    <div class="container">
       <div class="row justify-content-center">
         <div class="col text-center" style="max-width: 500px;">
 
 
-          <form th:action="@{/login}" method="post" class="form-signin" >
+          <form th:action="@{/login}" method="post" class="form-signin mt-5" >
             <!-- Email input -->
             <div class="input-group mb-3">
-              <input type="text" class="form-control" id="username" name="username" placeholder="Логін" autofocus>
+              <input type="text" class="form-control" id="username" name="username" placeholder="email" autofocus>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>

@@ -1,6 +1,10 @@
 package com.ratatui.notes.note;
 import com.ratatui.notes.user.UserService;
 import com.ratatui.notes.utils.Helper;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.Objects;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -54,4 +58,11 @@ public class NoteService {
         return noteMapper.mapEntityToDto(noteRepository.getReferenceById(id));
     }
     public void deleteAll() { noteRepository.deleteAll();}
+
+    public void copyLink(String url) {
+        StringSelection stringSelection = new StringSelection(url);
+        System.setProperty("java.awt.headless", "false");
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
 }
