@@ -2,6 +2,7 @@ package com.ratatui.notes.note;
 
 import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,16 +80,24 @@ public class NoteController {
 
     @GetMapping("/edit")
     public String edit(Model model, @RequestParam UUID id) {
-        NoteDto noteDto = noteService.getById(id);
-        model.addAttribute("note", noteDto);
-        return ("/note/update");
+        try {
+            NoteDto noteDto = noteService.getById(id);
+            model.addAttribute("note", noteDto);
+        } catch (EntityNotFoundException e) {
+            return "redirect:/error/404";
+        }
+        return "/note/update";
     }
 
     @GetMapping("/view")
     public String view(Model model, @RequestParam UUID id) {
-        NoteDto noteDto = noteService.getById(id);
-        model.addAttribute("note", noteDto);
-        return ("/note/view");
+        try {
+            NoteDto noteDto = noteService.getById(id);
+            model.addAttribute("note", noteDto);
+        } catch (EntityNotFoundException e) {
+            return "redirect:/error/404";
+        }
+        return "/note/view";
     }
 
     @PostMapping("/edit")
@@ -126,16 +135,19 @@ public class NoteController {
 
     @GetMapping("/share/{id}")
     public String shareNote(@PathVariable(name = "id") UUID id, Model model) {
-        NoteDto note = noteService.getById(id);
-        if (note == null) {
+        NoteDto noteDto = null;
+        try {
+            noteDto = noteService.getById(id);
+            model.addAttribute("note", noteDto);
+        } catch (EntityNotFoundException e) {
             return "redirect:/error/404";
         }
-        model.addAttribute("note", note);
+
         try {
             User currentUser = userService.getCurrentUser();
             //TODO перевірка на групу користувача
         } catch (Exception e) {
-            if (Objects.equals(note.getNoteAccessType(), "private")) {
+            if (Objects.equals(noteDto.getNoteAccessType(), "private")) {
                 return "redirect:/error/404";
             }
         }

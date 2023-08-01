@@ -1,19 +1,21 @@
 package com.ratatui.notes.note;
+
 import com.ratatui.notes.user.UserService;
 import com.ratatui.notes.utils.Helper;
-
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.util.Objects;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.List;
 import java.util.UUID;
+
 @Data
 @Service
 @RequiredArgsConstructor
@@ -54,10 +56,14 @@ public class NoteService {
         noteRepository.save(noteMapper.mapDtoToEntity(dto));
     }
 
-    public NoteDto getById(UUID id) {
-        return noteMapper.mapEntityToDto(noteRepository.getReferenceById(id));
+    public NoteDto getById(UUID id) throws EntityNotFoundException {
+        Note note = noteRepository.getReferenceById(id);
+        return noteMapper.mapEntityToDto(note);
     }
-    public void deleteAll() { noteRepository.deleteAll();}
+
+    public void deleteAll() {
+        noteRepository.deleteAll();
+    }
 
     public void copyLink(String url) {
         StringSelection stringSelection = new StringSelection(url);
