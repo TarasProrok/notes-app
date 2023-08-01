@@ -1,7 +1,7 @@
-package com.ratatui.notes.family.service;
+package com.ratatui.notes.family;
 
-import com.ratatui.notes.family.entity.Family;
-import com.ratatui.notes.family.repository.FamilyRepository;
+import com.ratatui.notes.family.Family;
+import com.ratatui.notes.family.FamilyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

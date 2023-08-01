@@ -1,4 +1,4 @@
-package com.ratatui.notes.family.dto;
+package com.ratatui.notes.family;
 
 import lombok.Builder;
 import lombok.Data;

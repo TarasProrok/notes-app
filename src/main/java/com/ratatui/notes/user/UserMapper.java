@@ -1,5 +1,8 @@
 package com.ratatui.notes.user;
 import com.ratatui.notes.mapper.Mapper;
+import org.springframework.stereotype.Component;
+
+@Component
 public class UserMapper implements Mapper<User, UserDTO> {
 
     @Override

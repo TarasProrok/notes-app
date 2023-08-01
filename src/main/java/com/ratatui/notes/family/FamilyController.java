@@ -1,12 +1,8 @@
-package com.ratatui.notes.family.controller;
+package com.ratatui.notes.family;
 
-import com.ratatui.notes.family.entity.Family;
-import com.ratatui.notes.family.service.FamilyService;
 import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

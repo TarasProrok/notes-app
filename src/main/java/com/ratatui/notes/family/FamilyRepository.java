@@ -1,6 +1,6 @@
-package com.ratatui.notes.family.repository;
+package com.ratatui.notes.family;
 
-import com.ratatui.notes.family.entity.Family;
+import com.ratatui.notes.family.Family;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
