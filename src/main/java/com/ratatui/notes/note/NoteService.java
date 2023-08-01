@@ -52,7 +52,9 @@ public class NoteService {
 
     public NoteDto add(NoteDto noteDto) {
         noteDto.setNoteOwner(userService.getCurrentUser());
-        return noteMapper.mapEntityToDto(noteRepository.save(noteMapper.mapDtoToEntity(noteDto)));
+        Note note = noteMapper.mapDtoToEntity(noteDto);
+        Note savedNote = noteRepository.save(note);
+        return noteMapper.mapEntityToDto(savedNote);
     }
 
     public void deleteById(UUID id) {
