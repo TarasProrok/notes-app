@@ -45,7 +45,7 @@ public class User {
         @OneToMany(fetch = FetchType.LAZY, mappedBy="user")
         private List<Authorities> authorities;
         @ManyToOne
-        @JoinColumn(name = "family_id", nullable = false)
+        @JoinColumn(name = "family_id")
         private Family family;
 
     }

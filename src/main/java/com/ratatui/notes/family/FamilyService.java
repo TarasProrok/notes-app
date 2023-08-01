@@ -41,11 +41,9 @@ public class FamilyService {
         return optional.get();
     }
 
-
     public void leaveFamily() {
         User currentUser = userService.getCurrentUser();
-        currentUser.setFamily(null);
-        userService.updateUser(userMapper.mapEntityToDto(currentUser));
+        userService.deleteUserFamily(currentUser.getUserId());
     }
 
     public void addFamily(Family family) {
