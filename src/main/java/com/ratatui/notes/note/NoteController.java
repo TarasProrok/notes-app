@@ -107,7 +107,6 @@ public class NoteController {
             @RequestParam(value = "content") String content,
             @RequestParam(value = "publicNote", required = false) String publicNote) {
 
-
         String accessType = "private";
         if (publicNote != null) {
             accessType = "public";
@@ -117,9 +116,7 @@ public class NoteController {
         noteDto.setContent(content);
         noteDto.setTitle(title);
         noteDto.setNoteAccessType(accessType);
-
         noteService.update(noteDto);
-
         RedirectView redirect = new RedirectView();
         redirect.setUrl("/note/view?id=" + id);
         return redirect;
@@ -162,4 +159,19 @@ public class NoteController {
         noteService.copyLink(fullUrl);
         return "redirect:/note/view?id=" + id;
     }
+
+    @PostMapping("/tag/add")
+    public String addTag(Model model, @RequestParam UUID id, @RequestParam String tagTitle) {
+        NoteDto noteDto = noteService.addTag(id, tagTitle);
+        model.addAttribute("note", noteDto);
+        return ("/note/update");
+    }
+
+    @GetMapping("/tag/delete")
+    public String deleteTag(Model model, @RequestParam UUID noteId, @RequestParam UUID tagId) {
+        NoteDto noteDto = noteService.deleteTag(noteId, tagId);
+        model.addAttribute("note", noteDto);
+        return ("/note/update");
+    }
+
 }

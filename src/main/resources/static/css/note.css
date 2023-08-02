@@ -15,3 +15,17 @@ body {
 .header-menu{
     font-size: 1.2rem;
 }
+
+.delete-tag-button{
+    color: #6C757D;
+    text-align: center;
+    background-color: transparent;
+    padding: 0px 15px 15px 0px;
+    border: none;
+    cursor: pointer;
+
+}
+
+.delete-tag-button:hover {
+	color: #DC3545;
+}
