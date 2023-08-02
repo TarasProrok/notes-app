@@ -31,7 +31,7 @@ public class Note {
     @Pattern(regexp =".{5}|.{10000}")
     @Column(name = "content", length = 10000, nullable = false)
     private String content;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "note_owner", nullable = false)
     private User noteOwner;
     @Column(name = "note_access_type", nullable = false)

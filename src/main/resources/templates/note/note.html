@@ -27,7 +27,7 @@
                   <th scope="row" th:text="${iStat.index} + 1"></th>
                   <td><a th:href="@{/note/view(id=${note.id})}"><div  th:text="${note.title}"></div></a></td>
                   <td th:text="${#temporals.format(note.createdDate, 'dd-MM-yyyy')}"></td>
-                  <td></td>
+                  <td th:text="${note.noteOwner.nickname}"></td>
                   <td>
                     <div th:each="tag: ${note.tagList}">
                     <span class="badge badge-pill badge-info"><div th:text="${tag.title}"></div></span>
