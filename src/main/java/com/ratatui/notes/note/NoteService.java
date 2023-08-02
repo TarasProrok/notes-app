@@ -1,6 +1,9 @@
 package com.ratatui.notes.note;
 
-import com.ratatui.notes.user.User;
+import com.ratatui.notes.tag.Tag;
+import com.ratatui.notes.tag.TagDto;
+import com.ratatui.notes.tag.TagMapper;
+import com.ratatui.notes.tag.TagService;
 import com.ratatui.notes.user.UserService;
 import com.ratatui.notes.utils.Helper;
 import jakarta.persistence.EntityNotFoundException;
