@@ -142,7 +142,15 @@ public class NoteController {
 
         try {
             User currentUser = userService.getCurrentUser();
-            //TODO перевірка на групу користувача
+            if (currentUser.getFamily()!=null){
+                List<User> familyUsers = userService.getFamilyUsers(currentUser.getFamily());
+                if (familyUsers.contains(noteDto.getNoteOwner())){
+                    return "note/share";
+                }
+            }
+            if (Objects.equals(noteDto.getNoteAccessType(), "private")) {
+                return "redirect:/error/404";
+            }
         } catch (Exception e) {
             if (Objects.equals(noteDto.getNoteAccessType(), "private")) {
                 return "redirect:/error/404";
