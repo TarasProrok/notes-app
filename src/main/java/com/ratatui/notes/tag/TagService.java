@@ -16,30 +16,33 @@ public class TagService {
     private final TagRepository tagRepository;
     private final TagMapper tagMapper;
 
-    public List<Tag> listAll() {
-        return tagRepository.findAll();
+    public List<TagDto> listAll() {
+        return tagMapper.mapEntityToDto(tagRepository.findAll());
     }
-
-    public Tag addIfNotExists(TagDto tagDto) {
+    public TagDto addIfNotExists(TagDto tagDto) {
         Tag tag = tagMapper.mapDtoToEntity(tagDto);
         if (isNull(tag)) return null;
         if (!isNull(tag.getId())) {
             Tag targetTag = tagRepository.getReferenceById(tag.getId());
-            if (targetTag.getTitle().equalsIgnoreCase(tag.getTitle())) return targetTag;
+            if (targetTag.getTitle().equalsIgnoreCase(tag.getTitle())) return tagMapper.mapEntityToDto(targetTag);
         }
-        List<Tag> listTag = tagRepository.findAllByTitle(tag.getTitle());
+        List<TagDto> listTag = tagMapper.mapEntityToDto(tagRepository.findAllByTitle(tagDto.getTitle()));
         if (listTag.isEmpty()) {
-            return tagRepository.save(tag);
+            return tagMapper.mapEntityToDto(tagRepository.save(tag));
         }
         return listTag.get(0);
     }
-
+    public TagDto addIfNotExists(String title) {
+        TagDto tagDto = new TagDto();
+        tagDto.setTitle(title);
+        return addIfNotExists(tagDto);
+    }
     public void deleteById(UUID id) {
         tagRepository.deleteById(id);
     }
 
-    public Tag getById(UUID id) {
-        return tagRepository.getReferenceById(id);
+    public TagDto getById(UUID id) {
+        return tagMapper.mapEntityToDto(tagRepository.getReferenceById(id));
     }
 
     public void deleteAll() {
