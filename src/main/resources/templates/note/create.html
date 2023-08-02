@@ -22,10 +22,25 @@
 
               <div class="card-body p-0 m-3">
                 <div class="bs-stepper-content">
-                  <div class="form-group">
-                    <label for="title">Заголовок</label>
-                    <input type="text" class="form-control form-control-lg" id="title" name="title">
+
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+
+                      <div class="form-group">
+                        <label for="title">Заголовок</label>
+                        <input type="text" class="form-control form-control-lg" id="title" name="title">
+                      </div>
+
+                      <label class="checkbox-ios">
+                        <label class="form-check-label" for="publicNote">Публічна</label>
+                        <input type="checkbox" id="publicNote" name="publicNote">
+                        <span class="checkbox-ios-switch"></span>
+                      </label>
+                    </div>
+
                   </div>
+
+
 
                   <div class="form-group">
                     <label for="summernote">Вміст</label>
@@ -33,10 +48,11 @@
                     </textarea>
                   </div>
 
-                  <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="publicNote" name="publicNote">
-                    <label class="form-check-label" for="publicNote">Публічна</label>
-                  </div>
+
+
+
+
+
 
                 </div>
 

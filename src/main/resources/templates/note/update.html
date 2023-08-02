@@ -28,39 +28,29 @@
     <div class="content-wrapper content">
         <div class="row ml-auto mr-auto">
             <div class="col-md-12">
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h2>Редагування рецепту</h2>
-                            </div>
-                            <div class="col-sm-6">
-                                <ol class="float-right">
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <div class="text-center">
+                    <h2>Редагування рецепту</h2>
+                </div>
                 <div class="card card-default mb-2">
                     <form action="/note/edit" method="post" id="createForm">
                         <div class="card-body p-0 m-3">
                             <div class="bs-stepper-content">
-                                <div class="form-group">
-                                    <label for="title">Заголовок</label>
-                                    <input type="text" class="form-control form-control-lg" id="title" name="title"
-                                           th:value="${note.title}">
-                                </div>
+                              <div class="form-group">
+                                <label for="title">Заголовок</label>
+                                <input type="text" class="form-control form-control-lg" id="title" name="title" th:value="${note.title}">
+                              </div>
+
+                              <label class="checkbox-ios">
+                                <label class="form-check-label" for="publicNote">Публічна</label>
+                                <input type="checkbox" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}">
+                                <span class="checkbox-ios-switch"></span>
+                              </label>
                                 <div class="form-group">
                                     <label for="summernote">Вміст</label>
                                     <textarea rows="10" class="form-control form-control-lg" id="summernote"
                                               name="content" th:text="${note.content}">
 
                     </textarea>
-                                </div>
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="publicNote" name="publicNote"
-                                           th:checked="${note.noteAccessType=='public'}">
-                                    <label class="form-check-label" for="publicNote">Публічна</label>
                                 </div>
                                 <div class="form-group">
                                     <div class="d-inline p-2" th:each="tag: ${note.tagList}">
