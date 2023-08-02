@@ -1,6 +1,14 @@
 package com.ratatui.notes.user;
+import com.ratatui.notes.family.FamilyMapper;
 import com.ratatui.notes.mapper.Mapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@RequiredArgsConstructor
+@Component
 public class UserMapper implements Mapper<User, UserDTO> {
+
+    private final FamilyMapper familyMapper;
 
     @Override
     public UserDTO mapEntityToDto(User source) throws RuntimeException {
@@ -15,6 +23,7 @@ public class UserMapper implements Mapper<User, UserDTO> {
         target.setCreatedDate(source.getCreatedDate());
         target.setUpdatedDate(source.getUpdatedDate());
         target.setAuthorities(source.getAuthorities());
+        target.setFamily(familyMapper.mapEntityToDto(source.getFamily()));
         return target;
     }
 
@@ -32,6 +41,7 @@ public class UserMapper implements Mapper<User, UserDTO> {
         target.setCreatedDate(source.getCreatedDate());
         target.setUpdatedDate(source.getUpdatedDate());
         target.setAuthorities(source.getAuthorities());
+        target.setFamily(familyMapper.mapDtoToEntity(source.getFamily()));
         return target;
     }
 }

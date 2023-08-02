@@ -1,5 +1,6 @@
 package com.ratatui.notes.note;
 
+import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserService;
 import com.ratatui.notes.utils.Helper;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,6 +29,15 @@ public class NoteService {
         return noteRepository.findAll(pageable).map(this::convertToObjectDto);
     }
 
+    public Page<NoteDto> findAllByNoteOwnerFamily(Pageable pageable) {
+        User currentUser = userService.getCurrentUser();
+        if (currentUser.getFamily()==null){
+            return noteRepository.findAllByNoteOwner(currentUser, pageable).map(this::convertToObjectDto);
+        } else {
+            return noteRepository.findAllByNoteOwnerFamily(currentUser.getFamily(), pageable).map(this::convertToObjectDto);
+        }
+    }
+
     public NoteDto convertToObjectDto(Note note) {
         return noteMapper.mapEntityToDto(note);
     }
@@ -42,7 +52,9 @@ public class NoteService {
 
     public NoteDto add(NoteDto noteDto) {
         noteDto.setNoteOwner(userService.getCurrentUser());
-        return noteMapper.mapEntityToDto(noteRepository.save(noteMapper.mapDtoToEntity(noteDto)));
+        Note note = noteMapper.mapDtoToEntity(noteDto);
+        Note savedNote = noteRepository.save(note);
+        return noteMapper.mapEntityToDto(savedNote);
     }
 
     public void deleteById(UUID id) {

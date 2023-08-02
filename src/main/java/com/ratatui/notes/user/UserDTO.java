@@ -1,6 +1,7 @@
 package com.ratatui.notes.user;
 
 import com.ratatui.notes.authorities.Authorities;
+import com.ratatui.notes.family.FamilyResponseDto;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
@@ -23,4 +24,5 @@ public class UserDTO {
     private Instant createdDate;
     @Enumerated(EnumType.STRING)
     private List<Authorities> authorities;
+    private FamilyResponseDto family;
 }

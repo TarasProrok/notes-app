@@ -2,18 +2,16 @@ package com.ratatui.notes.user;
 
 
 import com.ratatui.notes.authorities.Authorities;
-import com.ratatui.notes.family.entity.Family;
+import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Date;
 import java.time.Instant;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -47,7 +45,7 @@ public class User {
         @OneToMany(fetch = FetchType.LAZY, mappedBy="user")
         private List<Authorities> authorities;
         @ManyToOne
-        @JoinColumn(name = "family_id", nullable = false)
+        @JoinColumn(name = "family_id")
         private Family family;
 
     }

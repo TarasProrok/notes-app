@@ -1,4 +1,4 @@
-package com.ratatui.notes.family.entity;
+package com.ratatui.notes.family;
 
 import com.ratatui.notes.user.User;
 import jakarta.persistence.*;

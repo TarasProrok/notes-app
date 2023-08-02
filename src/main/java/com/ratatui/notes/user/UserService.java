@@ -1,7 +1,11 @@
 package com.ratatui.notes.user;
 
+import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
+import com.ratatui.notes.note.NoteDto;
+import com.ratatui.notes.utils.Helper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -14,9 +18,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    public List<User> getFamilyUsers(Family family){
+        return userRepository.findAllByFamily(family);
     }
 
     public void deleteUserById(UUID id) {
@@ -32,10 +41,15 @@ public class UserService {
     }
 
     public void updateUser(UserDTO userDTO) {
-        User user = findUserById(userDTO.getId());
-        user.setEmail(userDTO.getEmail());
-        user.setAuthorities(userDTO.getAuthorities());
-        userRepository.save(user);
+        UserDTO dto = userMapper.mapEntityToDto(findUserById(userDTO.getId()));
+        BeanUtils.copyProperties(userDTO, dto, Helper.getNullPropertyNames(userDTO));
+        userRepository.save(userMapper.mapDtoToEntity(dto));
+    }
+
+    public void deleteUserFamily(UUID userId) {
+        User userById = findUserById(userId);
+        userById.setFamily(null);
+        userRepository.save(userById);
     }
 
     public void createNewUser(UserDTO userDTO) {

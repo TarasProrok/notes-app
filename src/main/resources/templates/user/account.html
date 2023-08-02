@@ -1,19 +1,169 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{fragments/layout}">
 <head>
-  <title>Кабінет</title>
+    <title>Кабінет</title>
 </head>
 
-  <div layout:fragment="content" th:remove="tag">
+<div layout:fragment="content" th:remove="tag">
     <div class="content-wrapper content">
 
+        <div class="modal fade" id="modal-leave">
+            <div class="modal-dialog modal-lg">
+                <form action="/family/leave" method="get">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Вийти зі складу родини?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                            <button type="submit" class="btn btn-success">Вийти</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-add">
+            <div class="modal-dialog modal-lg">
+                <form action="/family/add" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Приєднання до родини</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="code">Код</label>
+                                <input type="text" class="form-control form-control-lg" id="code" name="code"
+                                       placeholder="Введіть код сім'ї в яку бажаєте приєднатися">
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                            <button type="submit" class="btn btn-success">Приєднатися</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="row ml-auto mr-auto">
+            <div class="col-md-12 mb-4">
+
+                <div class="text-center">
+                    <h3>Кабінет користувача</h3>
+                </div>
+
+                <form action="/user/edit" method="post">
+                    <input type="hidden" name="oldEmail" th:value="${user.email}">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="email" th:value="${user.email}">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="password">Пароль</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Введіть новий пароль, якщо хочете його змінити">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label for="nickname">Ім'я</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname"
+                                   placeholder="" th:value="${user.nickname}">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="birthDate">Дата народження</label>
+                            <input type="date" id="birthDate" name="birthDate" class="form-control"
+                                   th:value="${user.birthDate}"
+                                   min="1900-01-01">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="gender">Стать</label>
+                            <select name="gender" class="form-control" id="gender">
+                                <option th:each="entry : ${gender.entrySet()}" th:value="${entry.key}"
+                                        th:text="${entry.value}" th:selected="${entry.key==user.genderId}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="card-footer">
+                        <div class="btn-group" role="group">
+                            <button type="submit" class="btn btn-success m-1">Зберегти</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="row ml-auto mr-auto">
+            <div class="col-md-12">
+
+                <div class="mb-4" th:if="${family==null}">
+                    <button type="button" class="btn btn-primary m-1" data-toggle="modal"
+                            data-target="#modal-add">
+                        Приєднатися до родини
+                    </button>
+
+                    <button type="button" class="btn btn-success m-1" onclick="window.location.href = '/family/create';">
+                        Створити родину
+                    </button>
+                </div>
+
+                <div th:if="${family!=null}">
+                    <div class="card mb-4">
+                        <h5 class="card-header" th:text="${family.title} + ' (' + ${family.code}+')'"></h5>
+                        <div class="card-body">
+
+                            <p class="card-text">
+
+                            <ul th:each="userFamily: ${usersFamilyDtos}" class="list-group">
+                                <li class="list-group-item" th:text="${userFamily.nickname}" />
+                            </ul>
+
+                            </p>
+
+
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#modal-leave">
+                                    Вийти з родини
+                                </button>
+
+                                <button type="button" class="btn btn-success m-1" onclick="window.location.href = '/family/edit';">Редагувати</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
 
 
     </div>
-  </div>
+</div>
 
 </body>
 </html>

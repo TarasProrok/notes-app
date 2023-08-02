@@ -63,7 +63,7 @@ public class NoteController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(defaultPageSize);
         ModelAndView result = new ModelAndView("/note/note");
-        Page<NoteDto> notePage = noteService.findAll(PageRequest.of(currentPage - 1, pageSize));
+        Page<NoteDto> notePage = noteService.findAllByNoteOwnerFamily(PageRequest.of(currentPage - 1, pageSize));
         int totalPages = notePage.getTotalPages();
         result.addObject("notePage", notePage);
         result.addObject("previousPage", currentPage > 1 ? currentPage - 1 : 1);

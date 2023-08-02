@@ -12,24 +12,21 @@
         <div class="row ml-auto mr-auto">
           <div class="col-md-12">
 
-            <div class="text-center">
-              <h3>Редагування родини</h3>
-            </div>
 
+                  <div class="text-center">
+                    <h3>Створення родини</h3>
+                  </div>
 
 
             <div class="card card-default mb-2">
 
-              <form action="/family/edit" method="post" id="createForm">
-
-                <input type="hidden" name="id" th:value="${family.id}">
+              <form action="/family/create" method="post" id="createForm">
 
                 <div class="card-body p-0 m-3">
                   <div class="bs-stepper-content">
                     <div class="form-group">
                       <label for="title">Назва</label>
-                      <input type="text" class="form-control form-control-lg" id="title" name="title"
-                             th:value="${family.title}">
+                      <input type="text" class="form-control form-control-lg" id="title" name="title">
                     </div>
                   </div>
 
