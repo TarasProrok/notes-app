@@ -58,8 +58,18 @@ public class NoteService {
     }
 
     public NoteDto add(NoteDto noteDto) {
-        noteDto.setNoteOwner(userService.getCurrentUser());
-        Note note = noteMapper.mapDtoToEntity(noteDto);
+        String accessType = "private";
+        if (noteDto.getNoteAccessType()==null) {
+            accessType = "public";
+        }
+
+        Note note = Note.builder()
+            .title(noteDto.getTitle())
+            .content(noteDto.getContent())
+            .noteAccessType(accessType)
+            .build();
+
+        note.setNoteOwner(userService.getCurrentUser());
         Note savedNote = noteRepository.save(note);
         return noteMapper.mapEntityToDto(savedNote);
     }

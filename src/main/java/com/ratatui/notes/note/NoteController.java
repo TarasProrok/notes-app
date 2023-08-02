@@ -4,12 +4,14 @@ import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -27,33 +29,22 @@ import java.util.stream.IntStream;
 public class NoteController {
     private final NoteService noteService;
     private final UserService userService;
+    private final NoteDtoValidator noteDtoValidator;
 
     @Value("${note.page.size}")
     private int defaultPageSize = 10;
 
     @PostMapping("/create")
-    public RedirectView createNote(@RequestParam(value = "title") String title,
-                                   @RequestParam(value = "content") String content,
-                                   @RequestParam(value = "publicNote", required = false) String publicNote) {
-        String accessType = "private";
-        if (publicNote != null) {
-            accessType = "public";
-        }
-        NoteDto noteDto = new NoteDto();
-        noteDto.setContent(content);
-        noteDto.setTitle(title);
-        noteDto.setNoteAccessType(accessType);
-        NoteDto saveDto = noteService.add(noteDto);
-
-        RedirectView redirect = new RedirectView();
-        redirect.setUrl("/note/view?id=" + saveDto.getId());
-        return redirect;
+    public String createNote(@ModelAttribute("note") NoteDto note, BindingResult bindingResult) {
+        noteDtoValidator.validate(note, bindingResult);
+        if (bindingResult.hasErrors()) return "note/create";
+        NoteDto saveDto = noteService.add(note);
+        return "redirect:/note/view?id=" + saveDto.getId();
     }
 
     @GetMapping("/create")
-    public ModelAndView createNoteViewPage() {
-        ModelAndView result = new ModelAndView("/note/create");
-        return result;
+    public String createNoteViewPage(@ModelAttribute("note") NoteDto note) {
+        return "/note/create";
     }
 
     @GetMapping("/list")
@@ -79,10 +70,10 @@ public class NoteController {
     }
 
     @GetMapping("/edit")
-    public String edit(Model model, @RequestParam UUID id) {
+    public String edit(@ModelAttribute("note") NoteDto note, @RequestParam UUID id) {
+        note.setId(id);
         try {
             NoteDto noteDto = noteService.getById(id);
-            model.addAttribute("note", noteDto);
         } catch (EntityNotFoundException e) {
             return "redirect:/error/404";
         }
@@ -101,25 +92,23 @@ public class NoteController {
     }
 
     @PostMapping("/edit")
-    public RedirectView editNote(
+    public String editNote(
             @RequestParam(value = "id") UUID id,
-            @RequestParam(value = "title") String title,
-            @RequestParam(value = "content") String content,
-            @RequestParam(value = "publicNote", required = false) String publicNote) {
+            @ModelAttribute("note") NoteDto note, BindingResult bindingResult) {
+        noteDtoValidator.validate(note, bindingResult);
+        if (bindingResult.hasErrors()) return "note/edit";
 
         String accessType = "private";
-        if (publicNote != null) {
+        if (note.getNoteAccessType()==null) {
             accessType = "public";
         }
+
         NoteDto noteDto = new NoteDto();
-        noteDto.setId(id);
-        noteDto.setContent(content);
-        noteDto.setTitle(title);
+        noteDto.setTitle(note.getTitle());
+        noteDto.setContent(note.getContent());
         noteDto.setNoteAccessType(accessType);
         noteService.update(noteDto);
-        RedirectView redirect = new RedirectView();
-        redirect.setUrl("/note/view?id=" + id);
-        return redirect;
+        return "redirect:/note/view?id=" + id;
     }
 
     @GetMapping("/delete")

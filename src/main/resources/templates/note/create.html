@@ -18,7 +18,7 @@
 
           <div class="card card-default mb-2">
 
-            <form action="/note/create" method="post" id="createForm">
+            <form th:method="POST" th:action="@{note/create}" th:object="${note}">
 
               <div class="card-body p-0 m-3">
                 <div class="bs-stepper-content">
@@ -28,7 +28,8 @@
 
                       <div class="form-group">
                         <label for="title">Заголовок</label>
-                        <input type="text" class="form-control form-control-lg" id="title" name="title">
+                        <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+                        <input type="text" class="form-control form-control-lg" id="title" th:field="*{title}">
                       </div>
 
                     </div>
@@ -37,8 +38,8 @@
 
                   <div class="form-group">
                     <label for="summernote">Вміст</label>
-                    <textarea rows="10" class="form-control form-control-lg" id="summernote" name="content">
-                    </textarea>
+                    <div class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Title error</div>
+                    <textarea rows="10" class="form-control form-control-lg" id="summernote" th:field="*{content}"></textarea>
                   </div>
 
 
@@ -55,7 +56,7 @@
                 <div class="btn-group float-right mt-2" role="group">
                   <label class="checkbox-ios">
                     <label class="form-check-label" for="publicNote">Публічна</label>
-                    <input type="checkbox" id="publicNote" name="publicNote">
+                    <input type="checkbox" id="publicNote" name="noteAccessType" th:checked="*{noteAccessType}">
                     <span class="checkbox-ios-switch"></span>
                   </label>
                 </div>
