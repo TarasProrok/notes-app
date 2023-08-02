@@ -32,11 +32,13 @@
                         <input type="text" class="form-control form-control-lg" id="title" name="title" th:value="${note.title}" disabled>
                       </div>
 
-                      <label class="checkbox-ios">
-                        <label class="form-check-label" for="publicNote">Публічна</label>
-                        <input type="checkbox" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}" disabled>
-                        <span class="checkbox-ios-switch"></span>
-                      </label>
+
+                        <label class="checkbox-ios">
+                          <label class="form-check-label" for="publicNote">Публічна</label>
+                          <input type="checkbox" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}" disabled>
+                          <span class="checkbox-ios-switch"></span>
+                        </label>
+
                     </div>
 
                   </div>

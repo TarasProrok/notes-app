@@ -16,6 +16,10 @@ body {
     font-size: 1.2rem;
 }
 
+.form-check-label{
+    font-size: 1.2rem;
+}
+
 .delete-tag-button{
     color: #6C757D;
     text-align: center;
