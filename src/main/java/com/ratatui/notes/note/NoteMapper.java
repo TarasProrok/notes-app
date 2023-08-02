@@ -1,6 +1,8 @@
 package com.ratatui.notes.note;
 
 import com.ratatui.notes.mapper.Mapper;
+import com.ratatui.notes.tag.TagMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

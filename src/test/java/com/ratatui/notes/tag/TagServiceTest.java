@@ -22,7 +22,7 @@ class TagServiceTest {
         String expected = "Борщ " + sdf.format(new Date().getTime());
         TagDto tagDto = new TagDto();
         tagDto.setTitle(expected);
-        Tag actualTag = tagService.addIfNotExists(tagDto);
+        TagDto actualTag = tagService.addIfNotExists(tagDto);
         String actual = actualTag.getTitle();
         Assertions.assertEquals(expected, actual);
     }
