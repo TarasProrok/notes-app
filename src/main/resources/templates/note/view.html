@@ -33,12 +33,6 @@
                       </div>
 
 
-                        <label class="checkbox-ios">
-                          <label class="form-check-label" for="publicNote">Публічна</label>
-                          <input type="checkbox" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}" disabled>
-                          <span class="checkbox-ios-switch"></span>
-                        </label>
-
                     </div>
 
                   </div>
@@ -61,6 +55,13 @@
                     <input type="hidden" name="id" th:value="${note.id}">
                     <button class="btn btn-success m-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Копіювати посилання">Копіювати посилання</button>
                   </form>
+                </div>
+                <div class="btn-group float-right mt-2" role="group">
+                  <label class="checkbox-ios">
+                    <label class="form-check-label" for="publicNote">Публічна</label>
+                    <input type="checkbox" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}" disabled>
+                    <span class="checkbox-ios-switch"></span>
+                  </label>
                 </div>
               </div>
 

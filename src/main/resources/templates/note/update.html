@@ -40,11 +40,7 @@
                                 <input type="text" class="form-control form-control-lg" id="title" name="title" th:value="${note.title}">
                               </div>
 
-                              <label class="checkbox-ios">
-                                <label class="form-check-label" for="publicNote">Публічна</label>
-                                <input type="checkbox" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}">
-                                <span class="checkbox-ios-switch"></span>
-                              </label>
+
                                 <div class="form-group">
                                     <label for="summernote">Вміст</label>
                                     <textarea rows="10" class="form-control form-control-lg" id="summernote"
@@ -80,6 +76,15 @@
                                 </button>
                                 <button type="submit" class="btn btn-success m-1">Зберегти</button>
                             </div>
+
+                            <div class="btn-group float-right mt-2" role="group">
+                                <label class="checkbox-ios">
+                                    <label class="form-check-label" for="publicNote">Публічна</label>
+                                    <input type="checkbox" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}">
+                                    <span class="checkbox-ios-switch"></span>
+                                </label>
+                            </div>
+
                         </div>
                     </form>
                     <div class="card-body p-0 m-3">
