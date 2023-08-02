@@ -35,14 +35,16 @@ public class NoteService {
     public Page<NoteDto> findAll(Pageable pageable) {
         return noteRepository.findAll(pageable).map(this::convertToObjectDto);
     }
+
     public Page<NoteDto> findAllByNoteOwnerFamily(Pageable pageable) {
         User currentUser = userService.getCurrentUser();
-        if (currentUser.getFamily()==null){
+        if (currentUser.getFamily() == null) {
             return noteRepository.findAllByNoteOwner(currentUser, pageable).map(this::convertToObjectDto);
         } else {
             return noteRepository.findAllByNoteOwnerFamily(currentUser.getFamily(), pageable).map(this::convertToObjectDto);
         }
     }
+
     public NoteDto convertToObjectDto(Note note) {
         return noteMapper.mapEntityToDto(note);
     }
@@ -93,9 +95,11 @@ public class NoteService {
         TagDto tagDto = tagService.addIfNotExists(tagTitle);
         NoteDto noteDto = getById(noteId);
         List<Tag> tagList = noteDto.getTagList();
-        tagList.add(tagMapper.mapDtoToEntity(tagDto));
-        noteDto.setTagList(tagList.stream().distinct().collect(Collectors.toList()));
-        update(noteDto);
+        String tagDtoTitle = tagDto.getTitle();
+        if (tagList.stream().filter(tag -> tag.getTitle().equalsIgnoreCase(tagDtoTitle)).count() == 0) {
+            tagList.add(tagMapper.mapDtoToEntity(tagDto));
+            update(noteDto);
+        }
         return noteDto;
     }
 
