@@ -96,7 +96,7 @@ public class NoteService {
         NoteDto noteDto = getById(noteId);
         List<Tag> tagList = noteDto.getTagList();
         String tagDtoTitle = tagDto.getTitle();
-        if (tagList.stream().filter(tag -> tag.getTitle().equalsIgnoreCase(tagDtoTitle)).count() == 0) {
+        if (tagList.stream().filter(tag -> tag.getTitle().equalsIgnoreCase(tagDtoTitle)).count() == 0 && !tagDtoTitle.isBlank()) {
             tagList.add(tagMapper.mapDtoToEntity(tagDto));
             update(noteDto);
         }
