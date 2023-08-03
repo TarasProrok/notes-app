@@ -12,7 +12,6 @@
 
     <div class="container">
 
-
       <div th:if="${errorsMessages!=null}">
         <div th:each="message: ${errorsMessages.getErrors()}">
           <div class="alert alert-danger" role="alert" th:text="${message}">
@@ -29,20 +28,30 @@
         </div>
       </div>
 
-
       <div class="text-center">
-        <h3>Увійдіть щоб почати зберігати рецепти</h3>
+        <h3>Реєстрація</h3>
       </div>
 
       <div class="row justify-content-center">
         <div class="col text-center" style="max-width: 500px;">
 
 
-          <form th:action="@{/login}" method="post" class="form-signin mt-5" >
+          <form th:action="@{/register}" method="post" class="form-signin mt-5" >
+
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Ім'я" autofocus required>
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+
             <!-- Email input -->
             <div class="input-group mb-3">
               <input type="email" class="form-control" id="username" name="username" placeholder="email"
-                     autofocus required>
+                     required
+              >
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
@@ -52,7 +61,7 @@
 
             <!-- Password input -->
             <div class="input-group mb-3">
-              <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Пароль">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>
@@ -62,12 +71,8 @@
 
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4">Увійти</button>
+            <button type="submit" class="btn btn-primary btn-block mb-4">Зареєструватися</button>
 
-            <!-- Register buttons -->
-            <div class="text-center">
-              <p>Ще не зареєстровані? <a href="/register">Зареєструватися</a></p>
-            </div>
           </form>
 
 

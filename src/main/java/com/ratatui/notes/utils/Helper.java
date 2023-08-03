@@ -1,5 +1,7 @@
 package com.ratatui.notes.utils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -33,4 +35,9 @@ public class Helper {
         }
         return sb.toString();
     }
+    public static LocalDate getLocalDateFromString(String stringDate) {
+        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.from(europeanDateFormatter.parse(stringDate));
+    }
+
 }

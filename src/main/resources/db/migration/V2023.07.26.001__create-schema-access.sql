@@ -17,6 +17,7 @@ create table access.users(
     user_id        uuid          primary key,
 	username       varchar(50)   not null,
 	password       varchar(500)  not null,
+    role           varchar(32)   not NULL,
 	enabled        boolean       not null,
 	nickname       varchar(100)  not null,
 	birthday       date,
