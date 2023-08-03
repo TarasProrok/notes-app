@@ -1,5 +1,7 @@
 package com.ratatui.notes.utils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -10,6 +12,10 @@ import org.springframework.beans.BeanWrapperImpl;
  * @author Andriy Gaponov
  */
 public class Helper {
+
+    private Helper() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static String[] getNullPropertyNames(Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
@@ -32,5 +38,10 @@ public class Helper {
             sb.append(str.charAt(number));
         }
         return sb.toString();
+    }
+
+    public static LocalDate getLocalDateFromString(String stringDate) {
+        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.from(europeanDateFormatter.parse(stringDate));
     }
 }
