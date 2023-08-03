@@ -1,5 +1,7 @@
 package com.ratatui.notes.note;
 
+import static com.ratatui.notes.utils.Constants.REDIRECT_URL_404;
+
 import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,6 +34,7 @@ public class NoteController {
 
     private final NoteService noteService;
     private final UserService userService;
+    public static final String NOTE_UPDATE_TEMPLATE = "/note/update";
 
     @Value("${note.page.size}")
     private int defaultPageSize = 10;
@@ -57,8 +60,7 @@ public class NoteController {
 
     @GetMapping("/create")
     public ModelAndView createNoteViewPage() {
-        ModelAndView result = new ModelAndView("/note/create");
-        return result;
+        return new ModelAndView("/note/create");
     }
 
     @GetMapping("/list")
@@ -78,7 +80,7 @@ public class NoteController {
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()
-                .collect(Collectors.toList());
+                .toList();
             result.addObject("pageNumbers", pageNumbers);
         }
         return result;
@@ -90,9 +92,9 @@ public class NoteController {
             NoteDto noteDto = noteService.getById(id);
             model.addAttribute("note", noteDto);
         } catch (EntityNotFoundException e) {
-            return "redirect:/error/404";
+            return REDIRECT_URL_404;
         }
-        return "/note/update";
+        return NOTE_UPDATE_TEMPLATE;
     }
 
     @GetMapping("/view")
@@ -103,7 +105,7 @@ public class NoteController {
             model.addAttribute("note", noteDto);
             model.addAttribute("sharedLink", noteService.getSharedLink(id, uriComponentsBuilder));
         } catch (EntityNotFoundException e) {
-            return "redirect:/error/404";
+            return REDIRECT_URL_404;
         }
         return "/note/view";
     }
@@ -145,7 +147,7 @@ public class NoteController {
             noteDto = noteService.getById(id);
             model.addAttribute("note", noteDto);
         } catch (EntityNotFoundException e) {
-            return "redirect:/error/404";
+            return REDIRECT_URL_404;
         }
 
         try {
@@ -157,11 +159,11 @@ public class NoteController {
                 }
             }
             if (Objects.equals(noteDto.getNoteAccessType(), "private")) {
-                return "redirect:/error/404";
+                return REDIRECT_URL_404;
             }
         } catch (Exception e) {
             if (Objects.equals(noteDto.getNoteAccessType(), "private")) {
-                return "redirect:/error/404";
+                return REDIRECT_URL_404;
             }
         }
         return "note/share";
@@ -180,13 +182,13 @@ public class NoteController {
     public String addTag(Model model, @RequestParam UUID id, @RequestParam String tagTitle) {
         NoteDto noteDto = noteService.addTag(id, tagTitle);
         model.addAttribute("note", noteDto);
-        return ("/note/update");
+        return (NOTE_UPDATE_TEMPLATE);
     }
 
     @GetMapping("/tag/delete")
     public String deleteTag(Model model, @RequestParam UUID noteId, @RequestParam UUID tagId) {
         NoteDto noteDto = noteService.deleteTag(noteId, tagId);
         model.addAttribute("note", noteDto);
-        return ("/note/update");
+        return (NOTE_UPDATE_TEMPLATE);
     }
 }
