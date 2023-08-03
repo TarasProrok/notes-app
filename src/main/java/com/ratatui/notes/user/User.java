@@ -5,7 +5,10 @@ import com.ratatui.notes.authorities.Authorities;
 import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +18,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users", schema = "access")
 public class User {
@@ -26,6 +32,8 @@ public class User {
         private String email;
         @Column(name = "password")
         private String password;
+        @Column(name = "role")
+        private UserRole role;
         @Column(name = "enabled")
         private boolean isEnable;
         @Column(name="nickname")

@@ -9,12 +9,18 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors().disable().csrf().disable()
@@ -41,16 +47,5 @@ public class WebSecurityConfig {
                 .formLogin(a -> a.defaultSuccessUrl("/", true).permitAll())
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("dog@doc.com")
-                        .password("12345")
-                        .roles("USER")
-                        .build();
-        return new InMemoryUserDetailsManager(user);
     }
 }

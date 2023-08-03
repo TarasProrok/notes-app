@@ -1,8 +1,12 @@
 package com.ratatui.notes.user;
 
+import com.ratatui.notes.exceptions.UserAlreadyExistsException;
 import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
 import com.ratatui.notes.note.NoteDto;
+import com.ratatui.notes.registration.RegistrationRequest;
+import com.ratatui.notes.registration.token.VerificationToken;
+import com.ratatui.notes.registration.token.VerificationTokenRepository;
 import com.ratatui.notes.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -10,15 +14,61 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements IUserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final VerificationTokenRepository tokenRepository;
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User registerUser(RegistrationRequest request) {
+        Optional<User> user = this.findByEmail(request.email());
+        if (user.isPresent()){
+            throw new UserAlreadyExistsException(
+                    "User with email "+request.email() + " already exists");
+        }
+        var newUser = new User();
+        newUser.setNickname(request.nickname());
+        newUser.setEmail(request.email());
+        newUser.setPassword(passwordEncoder.encode(request.password()));
+        newUser.setRole(request.role());
+        return userRepository.save(newUser);
+    }
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void saveUserVerificationToken(User theUser, String token) {
+        var verificationToken = new VerificationToken(token, theUser);
+        tokenRepository.save(verificationToken);
+    }
+
+    @Override
+    public String validateToken(String theToken) {
+        VerificationToken token = tokenRepository.findByToken(theToken);
+        if(token == null){
+            return "Invalid verification token";
+        }
+        User user = token.getUser();
+        Calendar calendar = Calendar.getInstance();
+        if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0){
+            tokenRepository.delete(token);
+            return "Token already expired";
+        }
+        user.setEnabled(true);
+        userRepository.save(user);
+        return "valid";
+    }
 
     public List<User> findAllUsers() {
         return userRepository.findAll();
