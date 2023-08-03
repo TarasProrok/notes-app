@@ -2,7 +2,6 @@ package com.ratatui.notes.user;
 
 import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
-import com.ratatui.notes.note.NoteDto;
 import com.ratatui.notes.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -53,15 +52,7 @@ public class UserService {
     }
 
     public void createNewUser(UserDTO userDTO) {
-        User user = new User();
-        user.setEmail(user.getEmail());
-        user.setBirthDate(userDTO.getBirthDate());
-        user.setNickname(userDTO.getNickname());
-        user.setUserId(userDTO.getId());
-        user.setEnable(userDTO.isEnable());
-        user.setGenderId(userDTO.getGenderId());
-        user.setPassword(userDTO.getPassword());
-        user.setCreatedDate(userDTO.getCreatedDate());
+        User user = userMapper.mapDtoToEntity(userDTO);
         userRepository.save(user);
     }
 
