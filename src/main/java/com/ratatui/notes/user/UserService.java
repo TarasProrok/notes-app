@@ -53,15 +53,7 @@ public class UserService {
     }
 
     public void createNewUser(UserDTO userDTO) {
-        User user = new User();
-        user.setEmail(user.getEmail());
-        user.setBirthDate(userDTO.getBirthDate());
-        user.setNickname(userDTO.getNickname());
-        user.setUserId(userDTO.getId());
-        user.setEnable(userDTO.isEnable());
-        user.setGenderId(userDTO.getGenderId());
-        user.setPassword(userDTO.getPassword());
-        user.setCreatedDate(userDTO.getCreatedDate());
+        User user = userMapper.mapDtoToEntity(userDTO);
         userRepository.save(user);
     }
 

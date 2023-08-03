@@ -22,8 +22,8 @@ public class UserMapper implements Mapper<User, UserDTO> {
         target.setEnable(source.isEnable());
         target.setCreatedDate(source.getCreatedDate());
         target.setUpdatedDate(source.getUpdatedDate());
-        target.setAuthorities(source.getAuthorities());
         target.setFamily(familyMapper.mapEntityToDto(source.getFamily()));
+        target.setRole(source.getRole());
         return target;
     }
 
@@ -40,7 +40,7 @@ public class UserMapper implements Mapper<User, UserDTO> {
         target.setEnable(source.isEnable());
         target.setCreatedDate(source.getCreatedDate());
         target.setUpdatedDate(source.getUpdatedDate());
-        target.setAuthorities(source.getAuthorities());
+        target.setRole(source.getRole());
         target.setFamily(familyMapper.mapDtoToEntity(source.getFamily()));
         return target;
     }
