@@ -1,7 +1,6 @@
 package com.ratatui.notes.user;
 
 
-import com.ratatui.notes.authorities.Authorities;
 import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
 import jakarta.persistence.*;
@@ -42,11 +41,12 @@ public class User {
         private Instant updatedDate;
         @OneToMany(fetch = FetchType.LAZY, mappedBy="noteOwner")
         private List<Note> notes;
-        @OneToMany(fetch = FetchType.LAZY, mappedBy="user")
-        private List<Authorities> authorities;
         @ManyToOne
         @JoinColumn(name = "family_id")
         private Family family;
+        @Column(name = "role", nullable = false)
+        @Enumerated(EnumType.STRING)
+        private UserRoles role;
 
         @Override
         public boolean equals(Object o) {
