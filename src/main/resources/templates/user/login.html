@@ -12,6 +12,24 @@
 
     <div class="container">
 
+
+      <div th:if="${errorsMessages!=null}">
+        <div th:each="message: ${errorsMessages.getErrors()}">
+          <div class="alert alert-danger" role="alert" th:text="${message}">
+
+          </div>
+        </div>
+      </div>
+
+      <div th:if="${infoMessages!=null}">
+        <div th:each="message: ${infoMessages.getMessages()}">
+          <div class="alert alert-success" role="alert" th:text="${message}">
+
+          </div>
+        </div>
+      </div>
+
+
       <div class="text-center">
         <h3>Увійдіть щоб почати зберігати рецепти</h3>
       </div>
@@ -23,7 +41,8 @@
           <form th:action="@{/login}" method="post" class="form-signin mt-5" >
             <!-- Email input -->
             <div class="input-group mb-3">
-              <input type="text" class="form-control" id="username" name="username" placeholder="email" autofocus>
+              <input type="email" class="form-control" id="username" name="username" placeholder="email"
+                     autofocus required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
@@ -33,7 +52,7 @@
 
             <!-- Password input -->
             <div class="input-group mb-3">
-              <input type="password" id="password" name="password" class="form-control" placeholder="Пароль">
+              <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>
