@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -110,5 +111,8 @@ public class NoteService {
         noteDto.setTagList(tagMapper.mapDtoToEntity(newTagList));
         update(noteDto);
         return noteDto;
+    }
+    public String getSharedLink(UUID noteId, UriComponentsBuilder uriComponentsBuilder)  {
+        return uriComponentsBuilder.replacePath(null).replaceQuery(null).build().toString() + "/note/share/" + noteId;
     }
 }
