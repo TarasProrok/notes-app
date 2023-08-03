@@ -4,28 +4,32 @@ import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RequestMapping("/note")
 @RequiredArgsConstructor
 @Controller
 public class NoteController {
+
     private final NoteService noteService;
     private final UserService userService;
 
@@ -34,8 +38,8 @@ public class NoteController {
 
     @PostMapping("/create")
     public RedirectView createNote(@RequestParam(value = "title") String title,
-                                   @RequestParam(value = "content") String content,
-                                   @RequestParam(value = "publicNote", required = false) String publicNote) {
+        @RequestParam(value = "content") String content,
+        @RequestParam(value = "publicNote", required = false) String publicNote) {
         String accessType = "private";
         if (publicNote != null) {
             accessType = "public";
@@ -59,12 +63,13 @@ public class NoteController {
 
     @GetMapping("/list")
     public ModelAndView getNotes(
-            @RequestParam(required = false, name = "page") Optional<Integer> page,
-            @RequestParam(required = false, name = "size") Optional<Integer> size) {
+        @RequestParam(required = false, name = "page") Optional<Integer> page,
+        @RequestParam(required = false, name = "size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(defaultPageSize);
         ModelAndView result = new ModelAndView("/note/note");
-        Page<NoteDto> notePage = noteService.findAllByNoteOwnerFamily(PageRequest.of(currentPage - 1, pageSize));
+        Page<NoteDto> notePage = noteService.findAllByNoteOwnerFamily(
+            PageRequest.of(currentPage - 1, pageSize));
         int totalPages = notePage.getTotalPages();
         result.addObject("notePage", notePage);
         result.addObject("previousPage", currentPage > 1 ? currentPage - 1 : 1);
@@ -72,8 +77,8 @@ public class NoteController {
         result.addObject("nextPage", currentPage < totalPages ? currentPage + 1 : totalPages);
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
+                .boxed()
+                .collect(Collectors.toList());
             result.addObject("pageNumbers", pageNumbers);
         }
         return result;
@@ -91,11 +96,12 @@ public class NoteController {
     }
 
     @GetMapping("/view")
-    public String view(Model model, UriComponentsBuilder uriComponentsBuilder, @RequestParam UUID id) {
+    public String view(Model model, UriComponentsBuilder uriComponentsBuilder,
+        @RequestParam UUID id) {
         try {
             NoteDto noteDto = noteService.getById(id);
             model.addAttribute("note", noteDto);
-            model.addAttribute("sharedLink", noteService.getSharedLink(id,uriComponentsBuilder));
+            model.addAttribute("sharedLink", noteService.getSharedLink(id, uriComponentsBuilder));
         } catch (EntityNotFoundException e) {
             return "redirect:/error/404";
         }
@@ -104,10 +110,10 @@ public class NoteController {
 
     @PostMapping("/edit")
     public RedirectView editNote(
-            @RequestParam(value = "id") UUID id,
-            @RequestParam(value = "title") String title,
-            @RequestParam(value = "content") String content,
-            @RequestParam(value = "publicNote", required = false) String publicNote) {
+        @RequestParam(value = "id") UUID id,
+        @RequestParam(value = "title") String title,
+        @RequestParam(value = "content") String content,
+        @RequestParam(value = "publicNote", required = false) String publicNote) {
 
         String accessType = "private";
         if (publicNote != null) {
@@ -144,9 +150,9 @@ public class NoteController {
 
         try {
             User currentUser = userService.getCurrentUser();
-            if (currentUser.getFamily()!=null){
+            if (currentUser.getFamily() != null) {
                 List<User> familyUsers = userService.getFamilyUsers(currentUser.getFamily());
-                if (familyUsers.contains(noteDto.getNoteOwner())){
+                if (familyUsers.contains(noteDto.getNoteOwner())) {
                     return "note/share";
                 }
             }
@@ -183,5 +189,4 @@ public class NoteController {
         model.addAttribute("note", noteDto);
         return ("/note/update");
     }
-
 }

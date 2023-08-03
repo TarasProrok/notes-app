@@ -4,14 +4,11 @@ import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserMapper;
 import com.ratatui.notes.user.UserService;
 import com.ratatui.notes.utils.Helper;
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * @author Andriy Gaponov
@@ -26,7 +23,7 @@ public class FamilyService {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    public Family getFamilyByCode(String code){
+    public Family getFamilyByCode(String code) {
         Optional<Family> optional = familyRepository.findByCode(code);
         if (optional.isEmpty()) {
             throw new IllegalArgumentException("Family not found");
@@ -34,7 +31,7 @@ public class FamilyService {
         return optional.get();
     }
 
-    public Family getFamilyById(UUID id){
+    public Family getFamilyById(UUID id) {
         Optional<Family> optional = familyRepository.findById(id);
         if (optional.isEmpty()) {
             throw new IllegalArgumentException("Family not found");
@@ -66,11 +63,11 @@ public class FamilyService {
         familyRepository.save(familyById);
     }
 
-    private String getNewFamilyCode(){
+    private String getNewFamilyCode() {
         String newCode = Helper.getRandomString(10);
         try {
             getFamilyByCode(newCode);
-        } catch (Exception e){
+        } catch (Exception e) {
             return newCode;
         }
         return getNewFamilyCode();

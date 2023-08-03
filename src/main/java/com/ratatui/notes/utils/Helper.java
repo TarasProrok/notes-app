@@ -39,5 +39,4 @@ public class Helper {
         DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.from(europeanDateFormatter.parse(stringDate));
     }
-
 }

@@ -34,6 +34,18 @@ body {
 	color: #DC3545;
 }
 
+input[type="email"]:invalid {
+  border-color: red;
+}
+
+input[type="text"]:invalid {
+  border-color: red;
+}
+
+input[type="password"]:invalid {
+  border-color: red;
+}
+
 .checkbox-ios {
 	display: inline-block;
 	height: 28px;

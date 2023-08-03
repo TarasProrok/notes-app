@@ -53,5 +53,4 @@ public class TagService {
         Tag tag = tagMapper.mapDtoToEntity(tagDto);
         return tagMapper.mapEntityToDto(tagRepository.save(tag));
     }
-
 }

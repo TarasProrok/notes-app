@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class CustomErrorController implements ErrorController {
+
   @RequestMapping("/error")
   public ModelAndView handleError(HttpServletResponse response) {
     ModelAndView modelAndView = new ModelAndView();
@@ -29,5 +30,4 @@ public class CustomErrorController implements ErrorController {
 
     return modelAndView;
   }
-
 }

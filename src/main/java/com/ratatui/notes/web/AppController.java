@@ -1,8 +1,6 @@
 package com.ratatui.notes.web;
 
 import com.ratatui.notes.note.NoteService;
-import com.ratatui.notes.user.User;
-import com.ratatui.notes.user.UserDTO;
 import com.ratatui.notes.user.UserMapper;
 import com.ratatui.notes.user.UserService;
 import lombok.RequiredArgsConstructor;

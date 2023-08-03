@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-
 @RequestMapping("/")
 @RequiredArgsConstructor
 @Controller
@@ -48,7 +47,6 @@ public class UserController {
         result.addObject("usersFamilyDtos", usersFamilyDtos);
         return result;
     }
-
 
     @PostMapping("/account")
     public RedirectView updateAccount(@RequestParam(value = "oldEmail") String oldEmail,
