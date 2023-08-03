@@ -35,7 +35,8 @@ public class WebSecurityConfig {
                                             "/img/**",
                                             "/css/**",
                                             "/note/share/**",
-                                            "/error/**"
+                                            "/error/**",
+                                            "/register/**"
                                     )
                                     .permitAll();
                             requests
