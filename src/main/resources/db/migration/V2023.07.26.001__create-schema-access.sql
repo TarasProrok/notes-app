@@ -16,10 +16,11 @@ comment  on column access.gender.name_eng     is 'Найменування ге�
 create table access.users(
     user_id        uuid          primary key,
 	username       varchar(50)   not null,
-	password       varchar(500)  not null,
+	password       varchar(64)   not null,
 	enabled        boolean       not null,
 	nickname       varchar(100)  not null,
 	birthday       date,
+	role           varchar(45)   not NULL,
 	gender_id      integer       not null default 0,
 	created_date   timestamp,
 	updated_date   timestamp,
