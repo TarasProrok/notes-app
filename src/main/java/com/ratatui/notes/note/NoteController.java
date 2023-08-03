@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -90,10 +91,11 @@ public class NoteController {
     }
 
     @GetMapping("/view")
-    public String view(Model model, @RequestParam UUID id) {
+    public String view(Model model, UriComponentsBuilder uriComponentsBuilder, @RequestParam UUID id) {
         try {
             NoteDto noteDto = noteService.getById(id);
             model.addAttribute("note", noteDto);
+            model.addAttribute("sharedLink", noteService.getSharedLink(id,uriComponentsBuilder));
         } catch (EntityNotFoundException e) {
             return "redirect:/error/404";
         }

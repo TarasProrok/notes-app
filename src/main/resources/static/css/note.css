@@ -106,3 +106,14 @@ body {
 .checkbox-ios.focused .checkbox-ios-switch:before {
 	box-shadow: inset 0px 0px 4px #ff5623;
 }
+
+.github      {color: #191919;}
+.youtube     {color: #c4302b;}
+.twitter     {color: #00acee;}
+.instagram   {color: #3f729b;}
+.facebook    {color: #3b5998;}
+.skype       {color: #00aff0;}
+.linkedin    {color: #0e76a8;}
+.telegram    {color: #249bd7;}
+send-mail-to {color: #191919;}
+.whatsapp    {color: #50b154;}
