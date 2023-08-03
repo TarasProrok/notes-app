@@ -25,4 +25,5 @@ public class UserDTO {
     @Enumerated(EnumType.STRING)
     private List<Authorities> authorities;
     private FamilyResponseDto family;
+    private UserRoles role;
 }
