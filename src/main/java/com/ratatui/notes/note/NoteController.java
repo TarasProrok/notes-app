@@ -60,11 +60,14 @@ public class NoteController {
     @GetMapping("/list")
     public ModelAndView getNotes(
             @RequestParam(required = false, name = "page") Optional<Integer> page,
-            @RequestParam(required = false, name = "size") Optional<Integer> size) {
+            @RequestParam(required = false, name = "size") Optional<Integer> size,
+            @RequestParam(required = false, name = "searchText", defaultValue = "") String searchText) {
+
+        System.out.println("searchText = " + searchText);
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(defaultPageSize);
         ModelAndView result = new ModelAndView("/note/note");
-        Page<NoteDto> notePage = noteService.findAllByNoteOwnerFamily(PageRequest.of(currentPage - 1, pageSize));
+        Page<NoteDto> notePage = noteService.findAllByNoteOwnerFamily(PageRequest.of(currentPage - 1, pageSize),searchText);
         int totalPages = notePage.getTotalPages();
         result.addObject("notePage", notePage);
         result.addObject("previousPage", currentPage > 1 ? currentPage - 1 : 1);

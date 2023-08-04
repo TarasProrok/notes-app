@@ -36,14 +36,9 @@ public class NoteService {
     public Page<NoteDto> findAll(Pageable pageable) {
         return noteRepository.findAll(pageable).map(this::convertToObjectDto);
     }
-
-    public Page<NoteDto> findAllByNoteOwnerFamily(Pageable pageable) {
+    public Page<NoteDto> findAllByNoteOwnerFamily(Pageable pageable, String searchText) {
         User currentUser = userService.getCurrentUser();
-        if (currentUser.getFamily() == null) {
-            return noteRepository.findAllByNoteOwner(currentUser, pageable).map(this::convertToObjectDto);
-        } else {
-            return noteRepository.findAllByNoteOwnerFamily(currentUser.getFamily(), pageable).map(this::convertToObjectDto);
-        }
+            return noteRepository.findNoteList(currentUser, currentUser.getFamily(), searchText, pageable).map(this::convertToObjectDto);
     }
 
     public NoteDto convertToObjectDto(Note note) {
