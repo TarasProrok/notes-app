@@ -2,13 +2,25 @@ package com.ratatui.notes.note;
 
 import com.ratatui.notes.tag.Tag;
 import com.ratatui.notes.user.User;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.validation.constraints.Pattern;
 
 import java.time.Instant;
@@ -25,10 +37,10 @@ public class Note {
     @Column(name = "note_id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Pattern(regexp =".{5}|.{100}")
+    @Pattern(regexp = ".{5}|.{100}")
     @Column(name = "title", length = 100, nullable = false)
     private String title;
-    @Pattern(regexp =".{5}|.{10000}")
+    @Pattern(regexp = ".{5}|.{10000}")
     @Column(name = "content", length = 10000, nullable = false)
     private String content;
     @ManyToOne

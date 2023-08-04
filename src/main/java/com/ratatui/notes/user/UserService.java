@@ -23,7 +23,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> getFamilyUsers(Family family){
+    public List<User> getFamilyUsers(Family family) {
         return userRepository.findAllByFamily(family);
     }
 
@@ -64,7 +64,7 @@ public class UserService {
         return user;
     }
 
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.getUsername();
         return findUserByName(username);
