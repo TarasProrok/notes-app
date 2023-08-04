@@ -1,15 +1,14 @@
 package com.ratatui.notes.note;
 
+import static java.util.Objects.isNull;
+
 import com.ratatui.notes.mapper.Mapper;
-import com.ratatui.notes.tag.TagMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-import static java.util.Objects.isNull;
 @Component
 public class NoteMapper implements Mapper<Note, NoteDto> {
+
     @Override
     public NoteDto mapEntityToDto(Note source) throws RuntimeException {
         if (isNull(source)) {
@@ -43,10 +42,12 @@ public class NoteMapper implements Mapper<Note, NoteDto> {
         target.setTagList(source.getTagList());
         return target;
     }
+
     @Override
     public List<NoteDto> mapEntityToDto(List<Note> source) throws RuntimeException {
         return Mapper.super.mapEntityToDto(source);
     }
+
     @Override
     public List<Note> mapDtoToEntity(List<NoteDto> source) throws RuntimeException {
         return Mapper.super.mapDtoToEntity(source);
