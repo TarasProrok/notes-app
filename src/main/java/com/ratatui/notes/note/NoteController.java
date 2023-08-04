@@ -37,7 +37,7 @@ public class NoteController {
     private final UserService userService;
     public static final String NOTE_UPDATE_TEMPLATE = "/note/update";
     @Value("${note.page.size}")
-    private static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int DEFAULT_PAGE_SIZE = 10;
 
     @PostMapping("/create")
     public RedirectView createNote(@RequestParam(value = "title") String title,
