@@ -13,6 +13,9 @@ import org.springframework.beans.BeanWrapperImpl;
  */
 public class Helper {
 
+    private Helper() {
+    }
+
     public static String[] getNullPropertyNames(Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
@@ -28,7 +31,7 @@ public class Helper {
     public static String getRandomString(int length) {
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int number = random.nextInt(62);
             sb.append(str.charAt(number));
@@ -39,5 +42,4 @@ public class Helper {
         DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.from(europeanDateFormatter.parse(stringDate));
     }
-
 }

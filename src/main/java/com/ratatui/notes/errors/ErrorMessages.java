@@ -12,4 +12,8 @@ public class ErrorMessages {
     public void addError(String message){
         errors.add(message);
     }
+
+    public void clear(){
+        errors.clear();
+    }
 }
