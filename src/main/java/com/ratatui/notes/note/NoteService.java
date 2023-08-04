@@ -1,27 +1,29 @@
 package com.ratatui.notes.note;
 
-import com.ratatui.notes.tag.Tag;
-import com.ratatui.notes.tag.TagDto;
-import com.ratatui.notes.tag.TagMapper;
-import com.ratatui.notes.tag.TagService;
-import com.ratatui.notes.user.User;
-import com.ratatui.notes.user.UserService;
-import com.ratatui.notes.utils.Helper;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.beans.BeanUtils;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Clipboard;
+import java.awt.Toolkit;
+import java.util.stream.Collectors;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
+
+import com.ratatui.notes.user.UserService;
+import com.ratatui.notes.tag.TagService;
+import com.ratatui.notes.tag.TagMapper;
+import com.ratatui.notes.utils.Helper;
+import com.ratatui.notes.tag.TagDto;
+import com.ratatui.notes.user.User;
+import com.ratatui.notes.tag.Tag;
 
 @Data
 @Service
@@ -34,10 +36,6 @@ public class NoteService {
     private final TagMapper tagMapper;
     private final NoteValidator noteValidator;
 
-    public Page<NoteDto> findAll(Pageable pageable) {
-        return noteRepository.findAll(pageable).map(this::convertToObjectDto);
-    }
-
     public Page<NoteDto> findAllByNoteOwnerFamily(Pageable pageable, String searchText) {
         User currentUser = userService.getCurrentUser();
         return noteRepository.findNoteList(currentUser, currentUser.getFamily(), searchText, pageable).map(this::convertToObjectDto);
@@ -47,20 +45,10 @@ public class NoteService {
         return noteMapper.mapEntityToDto(note);
     }
 
-    public List<NoteDto> listAll() {
-        return noteMapper.mapEntityToDto(noteRepository.findAll());
-    }
-
-    public List<NoteDto> findAllByNoteOwner(UUID noteOwner) {
-        return noteMapper.mapEntityToDto(noteRepository.findAllByNoteOwner(noteOwner));
-    }
-
     public NoteDto add(NoteDto noteDto) {
         noteDto.setNoteOwner(userService.getCurrentUser());
         Note note = noteMapper.mapDtoToEntity(noteDto);
-
         noteValidator.validate(noteDto);
-
         Note savedNote = noteRepository.save(note);
         return noteMapper.mapEntityToDto(savedNote);
     }
@@ -72,19 +60,13 @@ public class NoteService {
     public void update(NoteDto noteDto) {
         NoteDto dto = getById(noteDto.getId());
         BeanUtils.copyProperties(noteDto, dto, Helper.getNullPropertyNames(noteDto));
-
         noteValidator.validate(noteDto);
-
         noteRepository.save(noteMapper.mapDtoToEntity(dto));
     }
 
     public NoteDto getById(UUID id) throws EntityNotFoundException {
         Note note = noteRepository.getReferenceById(id);
         return noteMapper.mapEntityToDto(note);
-    }
-
-    public void deleteAll() {
-        noteRepository.deleteAll();
     }
 
     public void copyLink(String url) {
