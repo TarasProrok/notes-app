@@ -1,4 +1,4 @@
-package com.ratatui.notes.web;
+package com.ratatui.notes.errors;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.web.servlet.error.ErrorController;
