@@ -35,12 +35,11 @@
                     <form action="/note/edit" method="post" id="createForm">
                         <div class="card-body p-0 m-3">
                             <div class="bs-stepper-content">
-                              <div class="form-group">
-                                <label for="title">Заголовок</label>
-                                <input type="text" class="form-control form-control-lg" id="title" name="title" th:value="${note.title}">
-                              </div>
-
-
+                                <div class="form-group">
+                                    <label for="title">Заголовок</label>
+                                    <input type="text" class="form-control form-control-lg" id="title" name="title"
+                                           th:value="${note.title}">
+                                </div>
                                 <div class="form-group">
                                     <label for="summernote">Вміст</label>
                                     <textarea rows="10" class="form-control form-control-lg" id="summernote"
@@ -80,7 +79,8 @@
                             <div class="btn-group float-right mt-2" role="group">
                                 <label class="checkbox-ios">
                                     <label class="form-check-label" for="publicNote">Публічна</label>
-                                    <input type="checkbox" id="publicNote" name="publicNote" th:checked="${note.noteAccessType=='public'}">
+                                    <input type="checkbox" id="publicNote" name="publicNote"
+                                           th:checked="${note.noteAccessType=='public'}">
                                     <span class="checkbox-ios-switch"></span>
                                 </label>
                             </div>
@@ -96,7 +96,7 @@
                                            aria-describedby="inputGroup-sizing-default" id="tagTitle" name="tagTitle"
                                            placeholder="Вкажіть назву мітки">
                                     <div class="input-group-append">
-                                        <button type="submit" class="input-group-text">Додати мітку</button>
+                                        <button type="submit" class="btn btn-success">Додати мітку</button>
                                     </div>
                                 </div>
                             </form>

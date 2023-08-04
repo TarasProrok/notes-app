@@ -36,9 +36,10 @@ public class NoteService {
     public Page<NoteDto> findAll(Pageable pageable) {
         return noteRepository.findAll(pageable).map(this::convertToObjectDto);
     }
+
     public Page<NoteDto> findAllByNoteOwnerFamily(Pageable pageable, String searchText) {
         User currentUser = userService.getCurrentUser();
-            return noteRepository.findNoteList(currentUser, currentUser.getFamily(), searchText, pageable).map(this::convertToObjectDto);
+        return noteRepository.findNoteList(currentUser, currentUser.getFamily(), searchText, pageable).map(this::convertToObjectDto);
     }
 
     public NoteDto convertToObjectDto(Note note) {
@@ -107,7 +108,8 @@ public class NoteService {
         update(noteDto);
         return noteDto;
     }
-    public String getSharedLink(UUID noteId, UriComponentsBuilder uriComponentsBuilder)  {
+
+    public String getSharedLink(UUID noteId, UriComponentsBuilder uriComponentsBuilder) {
         return uriComponentsBuilder.replacePath(null).replaceQuery(null).build().toString() + "/note/share/" + noteId;
     }
 }
