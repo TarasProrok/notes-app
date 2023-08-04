@@ -1,14 +1,25 @@
 package com.ratatui.notes.tag;
 
-import com.ratatui.notes.note.Note;
-import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+
+import com.ratatui.notes.note.Note;
 
 @Entity
 @Data
@@ -36,15 +47,19 @@ public class Tag {
     )
     @ManyToMany
     private List<Note> noteLists;
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Tag tag = (Tag) o;
-
         return id.equals(tag.id);
     }
+
     @Override
     public int hashCode() {
         return id.hashCode();
