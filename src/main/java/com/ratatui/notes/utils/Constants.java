@@ -3,7 +3,7 @@ package com.ratatui.notes.utils;
 /**
  * @author Andriy Gaponov
  */
-public class Constants {
+public final class Constants {
 
     private Constants() {
     }

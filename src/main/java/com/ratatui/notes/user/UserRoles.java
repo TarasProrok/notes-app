@@ -1,8 +1,8 @@
 package com.ratatui.notes.user;
 
 public enum UserRoles {
-    ROLE_ADMIN ("Admin"),
-    ROLE_USER ("User");
+    ROLE_ADMIN("Admin"),
+    ROLE_USER("User");
 
     private String friendlyName;
 
