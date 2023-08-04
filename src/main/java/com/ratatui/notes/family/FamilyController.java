@@ -26,15 +26,6 @@ public class FamilyController {
     private final FamilyService familyService;
     private final UserService userService;
 
-    @GetMapping
-    public ModelAndView getUserFamily() {
-        User user = userService.getCurrentUser();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("family/list");
-        modelAndView.addObject("family", user.getFamily());
-        return modelAndView;
-    }
-
     @GetMapping("/edit")
     public ModelAndView editUserFamilyShowPage() {
         User user = userService.getCurrentUser();
