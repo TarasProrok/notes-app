@@ -4,7 +4,6 @@ import com.ratatui.notes.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.validation.constraints.Size;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,7 +24,6 @@ public class Family {
     private UUID id;
 
     @Column(name = "title")
-    @Size(min = 3, max = 100)
     private String title;
 
     @Column(name = "code")

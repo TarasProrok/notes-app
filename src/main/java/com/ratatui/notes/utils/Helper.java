@@ -11,7 +11,7 @@ import org.springframework.beans.BeanWrapperImpl;
 /**
  * @author Andriy Gaponov
  */
-public class Helper {
+public final class Helper {
 
     private Helper() {
     }
@@ -22,7 +22,9 @@ public class Helper {
         Set emptyNames = new HashSet();
         for (java.beans.PropertyDescriptor pd : pds) {
             Object srcValue = src.getPropertyValue(pd.getName());
-            if (srcValue == null) emptyNames.add(pd.getName());
+            if (srcValue == null) {
+                emptyNames.add(pd.getName());
+            }
         }
         String[] result = new String[emptyNames.size()];
         return (String[]) emptyNames.toArray(result);

@@ -23,12 +23,12 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="contacts">Контакти</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mt-2">
                             <form action="#" th:action="@{/note/list?&query=blah}" class="form-inline my-2 my-lg-0"
                                   method="get">
                                 <input th:value ="${searchText}" class="form-control mr-sm-2 ml-4" id="searchText" name="searchText" type="search"
                                        placeholder="пошук" aria-label="Search">
-                                <button onclick="GetURLParameter()" class="btn btn-outline-success my-2 my-sm-0"
+                                <button class="btn btn-outline-success my-2 my-sm-0"
                                         type="submit">Шукати
                                 </button>
                             </form>
