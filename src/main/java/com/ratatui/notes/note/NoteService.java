@@ -32,6 +32,7 @@ public class NoteService {
     private final UserService userService;
     private final TagService tagService;
     private final TagMapper tagMapper;
+    private final NoteValidator noteValidator;
 
     public Page<NoteDto> findAll(Pageable pageable) {
         return noteRepository.findAll(pageable).map(this::convertToObjectDto);
@@ -57,6 +58,9 @@ public class NoteService {
     public NoteDto add(NoteDto noteDto) {
         noteDto.setNoteOwner(userService.getCurrentUser());
         Note note = noteMapper.mapDtoToEntity(noteDto);
+
+        noteValidator.validate(noteDto);
+
         Note savedNote = noteRepository.save(note);
         return noteMapper.mapEntityToDto(savedNote);
     }
@@ -68,6 +72,8 @@ public class NoteService {
     public void update(NoteDto noteDto) {
         NoteDto dto = getById(noteDto.getId());
         BeanUtils.copyProperties(noteDto, dto, Helper.getNullPropertyNames(noteDto));
+
+        noteValidator.validate(noteDto);
 
         noteRepository.save(noteMapper.mapDtoToEntity(dto));
     }

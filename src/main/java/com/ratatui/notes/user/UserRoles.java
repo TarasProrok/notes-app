@@ -4,13 +4,13 @@ public enum UserRoles {
     ROLE_ADMIN ("Admin"),
     ROLE_USER ("User");
 
-    private String frendlyName;
+    private String friendlyName;
 
     UserRoles(String friendlyName) {
-        this.frendlyName = friendlyName;
+        this.friendlyName = friendlyName;
     }
 
     public String getFriendlyName() {
-        return frendlyName;
+        return friendlyName;
     }
 }

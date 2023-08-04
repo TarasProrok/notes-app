@@ -1,16 +1,14 @@
 package com.ratatui.notes.family;
 
-import com.ratatui.notes.mapper.Mapper;
-import com.ratatui.notes.note.Note;
-import com.ratatui.notes.note.NoteDto;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-
 import static java.util.Objects.isNull;
+
+import com.ratatui.notes.mapper.Mapper;
+import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class FamilyMapper implements Mapper<Family, FamilyResponseDto> {
+
     @Override
     public FamilyResponseDto mapEntityToDto(Family source) throws RuntimeException {
         if (isNull(source)) {
@@ -18,10 +16,10 @@ public class FamilyMapper implements Mapper<Family, FamilyResponseDto> {
         }
 
         return FamilyResponseDto.builder()
-                .title(source.getTitle())
-                .id(source.getId())
-                .code(source.getCode())
-                .build();
+            .title(source.getTitle())
+            .id(source.getId())
+            .code(source.getCode())
+            .build();
     }
 
     @Override
@@ -30,15 +28,17 @@ public class FamilyMapper implements Mapper<Family, FamilyResponseDto> {
             return null;
         }
         return Family.builder()
-                .title(source.getTitle())
-                .id(source.getId())
-                .code(source.getCode())
-                .build();
+            .title(source.getTitle())
+            .id(source.getId())
+            .code(source.getCode())
+            .build();
     }
+
     @Override
     public List<FamilyResponseDto> mapEntityToDto(List<Family> source) throws RuntimeException {
         return Mapper.super.mapEntityToDto(source);
     }
+
     @Override
     public List<Family> mapDtoToEntity(List<FamilyResponseDto> source) throws RuntimeException {
         return Mapper.super.mapDtoToEntity(source);
