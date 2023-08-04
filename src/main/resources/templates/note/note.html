@@ -36,7 +36,7 @@
                         <div th:each="tag, tagStat: ${note.tagList}" th:class="(${tagStat.index}==0)? 'carousel-item active' : 'carousel-item'"  >
                           <span style="cursor: pointer;"
                                 class="badge badge-pill badge-info d-block w-40"
-                                th:attr="onclick=|window.location.href='/note/tag/delete?noteId=${note.id}&tagId=${tag.id}';|"><div th:text="${tag.title}"
+                                th:attr="onclick=|window.location.href='/note/list?size=${notePage.size}&page=1&searchText=${tag.title}';|"><div th:text="${tag.title}"
                           ></div></span>
                         </div>
                         <!-- Елемент -->
@@ -61,16 +61,16 @@
             <div class="col-md-12">
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                  <li class="page-item"><a th:href="@{/note/list(size=${notePage.size}, page=${previousPage})}"
+                  <li class="page-item"><a th:href="@{/note/list(size=${notePage.size}, page=${previousPage}, searchText=${searchText})}"
                                            th:text="Попередня"
                                            th:class="page-link"></a></li>
                 <div th:each="pageNumber : ${pageNumbers}">
                     <li class="page-item">
-                    <a th:href="@{/note/list(size=${notePage.size}, page=${pageNumber})}"
+                    <a th:href="@{/note/list(size=${notePage.size}, page=${pageNumber}, searchText=${searchText})}"
                        th:text=${pageNumber}
                        th:class="page-link"></a></li>
                 </div>
-                <li class="page-item"><a th:href="@{/note/list(size=${notePage.size}, page=${nextPage})}"
+                <li class="page-item"><a th:href="@{/note/list(size=${notePage.size}, page=${nextPage}, searchText=${searchText})}"
                                          th:text="Наступна"
                                          th:class="page-link"></a></li>
                   </ul>

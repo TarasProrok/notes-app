@@ -65,18 +65,19 @@ public class NoteController {
 
     @GetMapping("/list")
     public ModelAndView getNotes(
-        @RequestParam(required = false, name = "page") Optional<Integer> page,
-        @RequestParam(required = false, name = "size") Optional<Integer> size) {
+            @RequestParam(required = false, name = "page") Optional<Integer> page,
+            @RequestParam(required = false, name = "size") Optional<Integer> size,
+            @RequestParam(required = false, name = "searchText", defaultValue = "") String searchText) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(defaultPageSize);
         ModelAndView result = new ModelAndView("/note/note");
-        Page<NoteDto> notePage = noteService.findAllByNoteOwnerFamily(
-            PageRequest.of(currentPage - 1, pageSize));
+        Page<NoteDto> notePage = noteService.findAllByNoteOwnerFamily(PageRequest.of(currentPage - 1, pageSize),searchText);
         int totalPages = notePage.getTotalPages();
         result.addObject("notePage", notePage);
         result.addObject("previousPage", currentPage > 1 ? currentPage - 1 : 1);
         result.addObject("currentPage", currentPage);
         result.addObject("nextPage", currentPage < totalPages ? currentPage + 1 : totalPages);
+        result.addObject("searchText", searchText);
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()
