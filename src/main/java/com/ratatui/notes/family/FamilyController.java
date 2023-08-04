@@ -2,7 +2,6 @@ package com.ratatui.notes.family;
 
 import com.ratatui.notes.user.User;
 import com.ratatui.notes.user.UserService;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.UUID;
+
+import static com.ratatui.notes.utils.Constants.URL_ACCOUNT;
 
 /**
  * @author Andriy Gaponov
@@ -26,7 +29,6 @@ public class FamilyController {
     @GetMapping
     public ModelAndView getUserFamily() {
         User user = userService.getCurrentUser();
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/list");
         modelAndView.addObject("family", user.getFamily());
@@ -36,30 +38,26 @@ public class FamilyController {
     @GetMapping("/edit")
     public ModelAndView editUserFamilyShowPage() {
         User user = userService.getCurrentUser();
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/edit");
         modelAndView.addObject("family", user.getFamily());
-
         return modelAndView;
     }
 
     @PostMapping("/edit")
     public RedirectView editUserFamily(@RequestParam(value = "id") UUID id,
-        @RequestParam(value = "title") String title) {
+                                       @RequestParam(value = "title") String title) {
         familyService.updateFamily(id, title);
-
         RedirectView redirect = new RedirectView();
-        redirect.setUrl("/account");
+        redirect.setUrl(URL_ACCOUNT);
         return redirect;
     }
 
     @GetMapping("/leave")
     public RedirectView leaveFamily() {
         familyService.leaveFamily();
-
         RedirectView redirect = new RedirectView();
-        redirect.setUrl("/account");
+        redirect.setUrl(URL_ACCOUNT);
         return redirect;
     }
 
@@ -69,8 +67,8 @@ public class FamilyController {
         try {
             Family familyByCode = familyService.getFamilyByCode(code);
             familyService.addFamily(familyByCode);
-            redirect.setUrl("/account");
-        } catch (IllegalArgumentException e){
+            redirect.setUrl(URL_ACCOUNT);
+        } catch (IllegalArgumentException e) {
             redirect.setUrl("/error/404");
         }
         return redirect;
@@ -80,7 +78,6 @@ public class FamilyController {
     public ModelAndView createFamilyShowPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/create");
-
         return modelAndView;
     }
 
@@ -89,9 +86,8 @@ public class FamilyController {
         FamilyResponseDto familyResponseDto = familyService.createFamily(title);
         Family familyByCode = familyService.getFamilyByCode(familyResponseDto.getCode());
         familyService.addFamily(familyByCode);
-
         RedirectView redirect = new RedirectView();
-        redirect.setUrl("/account");
+        redirect.setUrl(URL_ACCOUNT);
         return redirect;
     }
 }

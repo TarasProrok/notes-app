@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import static com.ratatui.notes.utils.Constants.FAMILY_CODE_LENGTH;
+
 /**
  * @author Andriy Gaponov
  */
@@ -64,7 +66,7 @@ public class FamilyService {
     }
 
     private String getNewFamilyCode() {
-        String newCode = Helper.getRandomString(10);
+        String newCode = Helper.getRandomString(FAMILY_CODE_LENGTH);
         try {
             getFamilyByCode(newCode);
         } catch (Exception e) {
