@@ -26,19 +26,9 @@
 
             <li class="nav-item">
               <form action="#" th:action="@{/note/list?&query=blah}" class="form-inline my-2 my-lg-0" method="get">
-                <input class="form-control mr-sm-2 ml-4" id="searchSize" name="size" type="hidden" th:value="10">
-                <input class="form-control mr-sm-2 ml-4" id="searchPage" name="page" type="hidden" th:value="1">
                 <input class="form-control mr-sm-2 ml-4" name="searchText" type="search" placeholder="пошук" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Шукати</button>
+                <button onclick="GetURLParameter()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Шукати</button>
               </form>
-
-<!--              <form action="/qr?query=blah" method="get">-->
-<!--                <input type="hidden" name="id" th:value="${note.id}"/>-->
-<!--                <input class="yellowButton" type="submit" value="SHARE"/>-->
-<!--              </form>-->
-
-
-
             </li>
 
           </ul>
@@ -54,27 +44,17 @@
   </div>
 </th:block>
 
-<script>
-function GetURLParameter(paramName)
-{
-const params = new URLSearchParams(document.location.search);
-const size =
-const page =
-const searchText = params.get("searchText");
+<!--<script>-->
+<!--GetURLParameter() {-->
+<!--console.log('Запуск')-->
+<!--const params = new URLSearchParams(document.location.search);-->
+<!--document.getElementById("searchSize").value = (params.get("size").trim() == '') ? 5 : params.get("size");-->
+<!--document.getElementById("searchPage").value = (params.get("page").trim() == '') ? 1 : params.get("page");-->
+<!--console.log(document.getElementById("searchPage").value);-->
+<!--console.log(document.getElementById("searchSize").value);-->
 
-document.getElementById("searchSize") = params.get("size");
-document.getElementById("searchPage") = params.get("page");
-
-
-
-return params.get(paramName);
-
-
-
-
-
-}
-</script>
+<!--};-->
+<!--</script>-->
 
 </body>
 </html>

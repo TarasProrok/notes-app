@@ -62,8 +62,6 @@ public class NoteController {
             @RequestParam(required = false, name = "page") Optional<Integer> page,
             @RequestParam(required = false, name = "size") Optional<Integer> size,
             @RequestParam(required = false, name = "searchText", defaultValue = "") String searchText) {
-
-        System.out.println("searchText = " + searchText);
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(defaultPageSize);
         ModelAndView result = new ModelAndView("/note/note");
@@ -73,6 +71,7 @@ public class NoteController {
         result.addObject("previousPage", currentPage > 1 ? currentPage - 1 : 1);
         result.addObject("currentPage", currentPage);
         result.addObject("nextPage", currentPage < totalPages ? currentPage + 1 : totalPages);
+        result.addObject("searchText", searchText);
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
