@@ -27,7 +27,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/account")
-    public ModelAndView getAccountPage(){
+    public ModelAndView getAccountPage() {
         ModelAndView result = new ModelAndView("/user/account");
 
         User currentUser = userService.getCurrentUser();
@@ -54,26 +54,26 @@ public class UserController {
                                       @RequestParam(value = "password") String password,
                                       @RequestParam(value = "nickname") String nickname,
                                       @RequestParam(value = "birthDate") String birthDate,
-                                      @RequestParam(value = "gender") int gender){
+                                      @RequestParam(value = "gender") int gender) {
         RedirectView redirect = new RedirectView();
         User currentUser = userService.getCurrentUser();
         UserDTO userDTO = userMapper.mapEntityToDto(currentUser);
         userDTO.setEmail(email);
-        if (!birthDate.isBlank()){
+        if (!birthDate.isBlank()) {
             userDTO.setBirthDate(Date.valueOf(Helper.getLocalDateFromString(birthDate)));
         }
         userDTO.setNickname(nickname);
         userDTO.setGenderId(gender);
 
-        if (!password.isBlank()){
-            if (!passwordEncoder.matches(password, currentUser.getPassword())){
+        if (!password.isBlank()) {
+            if (!passwordEncoder.matches(password, currentUser.getPassword())) {
                 userDTO.setPassword(passwordEncoder.encode(password));
             }
         }
 
         userService.updateUser(userDTO);
         redirect.setUrl("/account");
-        if (!Objects.equals(oldEmail, email)){
+        if (!Objects.equals(oldEmail, email)) {
             redirect.setUrl("/logout");
         }
 

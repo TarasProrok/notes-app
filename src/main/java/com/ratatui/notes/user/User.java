@@ -27,11 +27,11 @@ public class User {
         private String password;
         @Column(name = "enabled")
         private boolean isEnable;
-        @Column(name="nickname")
+        @Column(name = "nickname")
         private String nickname;
-        @Column(name="birthday")
+        @Column(name = "birthday")
         private Date birthDate;
-        @Column(name="gender_id")
+        @Column(name = "gender_id")
         private int genderId;
         @Column(name = "created_date")
         @CreationTimestamp
@@ -39,7 +39,7 @@ public class User {
         @Column(name = "updated_date")
         @UpdateTimestamp
         private Instant updatedDate;
-        @OneToMany(fetch = FetchType.LAZY, mappedBy="noteOwner")
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "noteOwner")
         private List<Note> notes;
         @ManyToOne
         @JoinColumn(name = "family_id")
