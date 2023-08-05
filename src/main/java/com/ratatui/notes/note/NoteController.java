@@ -35,7 +35,7 @@ public class NoteController {
 
     private final NoteService noteService;
     private final UserService userService;
-    public static final String NOTE_UPDATE_TEMPLATE = "/note/update";
+    public static final String NOTE_UPDATE_TEMPLATE = "note/update";
     @Value("${note.page.size}")
     public static final int DEFAULT_PAGE_SIZE = 10;
 
@@ -60,7 +60,7 @@ public class NoteController {
 
     @GetMapping("/create")
     public ModelAndView createNoteViewPage() {
-        return new ModelAndView("/note/create");
+        return new ModelAndView("note/create");
     }
 
     @GetMapping("/list")
@@ -70,7 +70,7 @@ public class NoteController {
             @RequestParam(required = false, name = "searchText", defaultValue = "") String searchText) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        ModelAndView result = new ModelAndView("/note/note");
+        ModelAndView result = new ModelAndView("note/note");
         Page<NoteDto> notePage = noteService.findAllByNoteOwnerFamily(PageRequest.of(currentPage - 1, pageSize), searchText);
         int totalPages = notePage.getTotalPages();
         result.addObject("notePage", notePage);
@@ -106,7 +106,7 @@ public class NoteController {
         } catch (EntityNotFoundException e) {
             return REDIRECT_URL_404;
         }
-        return "/note/view";
+        return "note/view";
     }
 
     @PostMapping("/edit")
@@ -174,7 +174,7 @@ public class NoteController {
         model.addAttribute("note", noteDto);
         String fullUrl = request.getRequestURL().toString();
         noteService.copyLink(fullUrl);
-        return "redirect:/note/view?id=" + id;
+        return "redirect:note/view?id=" + id;
     }
 
     @PostMapping("/tag/add")

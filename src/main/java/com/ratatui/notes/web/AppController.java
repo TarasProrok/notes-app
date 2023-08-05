@@ -19,16 +19,16 @@ public class AppController {
 
     @GetMapping("/")
     public String getMainPage() {
-        return "redirect:/note/list";
+        return "redirect:note/list";
     }
 
     @GetMapping("/contacts")
     public String getContactsPage() {
-        return "/pages/contacts";
+        return "pages/contacts";
     }
 
     @GetMapping("/about")
     public String getAboutPage() {
-        return "/pages/about";
+        return "pages/about";
     }
 }

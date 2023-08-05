@@ -26,12 +26,12 @@ public class AuthController {
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "/user/login";
+        return "user/login";
     }
 
     @GetMapping("/register")
     public String getRegisterPage() {
-        return "/user/register";
+        return "user/register";
     }
 
     @PostMapping("/register")
