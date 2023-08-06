@@ -15,8 +15,8 @@ comment on column notes.note_access_type.name_eng          is 'Найменув�
 
 create table notes.note (
 	note_id              uuid         primary key,
-	title                varchar(100) not null check(length(title) between 5 and 100),
-	content              text         not null check(length(content) between 5 and 10000),
+	title                varchar(100) not null,
+	content              text         not null,
 	note_owner           uuid         not null,
 	note_access_type     varchar(7)   not null,
 	created_date         timestamp,
