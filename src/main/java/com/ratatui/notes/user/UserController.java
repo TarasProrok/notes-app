@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping("/account")
     public ModelAndView getAccountPage() {
-        ModelAndView result = new ModelAndView("/user/account");
+        ModelAndView result = new ModelAndView("user/account");
 
         User currentUser = userService.getCurrentUser();
         UserDTO userDTO = userMapper.mapEntityToDto(currentUser);
