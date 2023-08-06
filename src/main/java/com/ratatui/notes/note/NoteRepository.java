@@ -15,6 +15,6 @@ import java.util.UUID;
 @Repository
 public interface NoteRepository extends PagingAndSortingRepository<Note, UUID>,
         JpaRepository<Note, UUID> {
-    @Query("SELECT distinct n FROM Note n LEFT JOIN n.tagList t INNER JOIN n.noteOwner u WHERE (u = :noteOwner OR u.family = :family) AND (UPPER(n.title) like UPPER(CONCAT('%',:searchText,'%')) OR UPPER(t.title) like UPPER(CONCAT('%',:searchText,'%')))")
+    @Query("SELECT distinct n FROM Note n LEFT JOIN n.tagList t INNER JOIN n.noteOwner u WHERE (u = :noteOwner OR u.family = :family) AND (UPPER(n.title) like UPPER(CONCAT('%',:searchText,'%')) OR UPPER(t.title) like UPPER(CONCAT('%',:searchText,'%'))) ORDER BY n.title")
     Page<Note> findNoteList(@Param("noteOwner") User noteOwner, @Param("family") Family family, @Param("searchText") String textSearch, Pageable pageable);
 }
