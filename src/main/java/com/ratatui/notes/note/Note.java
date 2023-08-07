@@ -2,16 +2,8 @@ package com.ratatui.notes.note;
 
 import com.ratatui.notes.tag.Tag;
 import com.ratatui.notes.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -39,8 +31,9 @@ public class Note {
     @ManyToOne
     @JoinColumn(name = "note_owner", nullable = false)
     private User noteOwner;
+    @Enumerated(EnumType.STRING)
     @Column(name = "note_access_type", nullable = false)
-    private String noteAccessType;
+    private NoteAccessType noteAccessType;
     @Column(name = "created_date")
     @CreationTimestamp
     private Instant createdDate;

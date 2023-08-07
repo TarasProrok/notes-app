@@ -15,9 +15,6 @@ import java.util.UUID;
 
 import static com.ratatui.notes.utils.Constants.URL_ACCOUNT;
 
-/**
- * @author Andriy Gaponov
- */
 @RequestMapping("/family")
 @RequiredArgsConstructor
 @Controller

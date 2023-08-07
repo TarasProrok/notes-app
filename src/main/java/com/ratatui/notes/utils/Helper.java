@@ -1,16 +1,14 @@
 package com.ratatui.notes.utils;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-/**
- * @author Andriy Gaponov
- */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
+
 public final class Helper {
 
     private Helper() {
@@ -31,15 +29,9 @@ public final class Helper {
     }
 
     public static String getRandomString(int length) {
-        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            int number = random.nextInt(62);
-            sb.append(str.charAt(number));
-        }
-        return sb.toString();
+        return RandomStringUtils.randomAlphanumeric(length);
     }
+
     public static LocalDate getLocalDateFromString(String stringDate) {
         DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.from(europeanDateFormatter.parse(stringDate));

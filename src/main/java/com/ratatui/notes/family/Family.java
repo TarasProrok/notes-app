@@ -7,9 +7,6 @@ import lombok.*;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * @author Andriy Gaponov
- */
 @Entity
 @Getter
 @Setter

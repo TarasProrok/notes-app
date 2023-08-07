@@ -5,9 +5,6 @@ import lombok.Data;
 
 import java.util.UUID;
 
-/**
- * @author Andriy Gaponov
- */
 @Data
 @Builder
 public class FamilyResponseDto {

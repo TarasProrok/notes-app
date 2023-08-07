@@ -7,8 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -18,10 +20,7 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
+    private final PasswordEncoder passwordEncoder;
 
     public List<User> getFamilyUsers(Family family) {
         return userRepository.findAllByFamily(family);
@@ -43,6 +42,28 @@ public class UserService {
         UserDTO dto = userMapper.mapEntityToDto(findUserById(userDTO.getId()));
         BeanUtils.copyProperties(userDTO, dto, Helper.getNullPropertyNames(userDTO));
         userRepository.save(userMapper.mapDtoToEntity(dto));
+    }
+
+    public void updateUser(String email,
+                           String password,
+                           String nickname,
+                           String birthDate,
+                           int gender) {
+        User currentUser = getCurrentUser();
+        UserDTO userDTO = userMapper.mapEntityToDto(currentUser);
+        userDTO.setEmail(email);
+        if (!birthDate.isBlank()) {
+            userDTO.setBirthDate(Date.valueOf(Helper.getLocalDateFromString(birthDate)));
+        }
+        userDTO.setNickname(nickname);
+        userDTO.setGenderId(gender);
+
+        if (!password.isBlank()) {
+            if (!passwordEncoder.matches(password, currentUser.getPassword())) {
+                userDTO.setPassword(passwordEncoder.encode(password));
+            }
+        }
+        updateUser(userDTO);
     }
 
     public void deleteUserFamily(UUID userId) {

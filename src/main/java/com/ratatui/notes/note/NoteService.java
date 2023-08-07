@@ -41,7 +41,7 @@ public class NoteService {
         return noteRepository.findNoteList(currentUser, currentUser.getFamily(), searchText, pageable).map(this::convertToObjectDto);
     }
 
-    public NoteDto convertToObjectDto(Note note) {
+    private NoteDto convertToObjectDto(Note note) {
         return noteMapper.mapEntityToDto(note);
     }
 
