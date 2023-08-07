@@ -43,9 +43,9 @@ public class NoteController {
     public RedirectView createNote(@RequestParam(value = "title") String title,
                                    @RequestParam(value = "content") String content,
                                    @RequestParam(value = "publicNote", required = false) String publicNote) {
-        String accessType = "private";
+        NoteAccessType accessType = NoteAccessType.PRIVATE;
         if (publicNote != null) {
-            accessType = "public";
+            accessType = NoteAccessType.PUBLIC;
         }
         NoteDto noteDto = new NoteDto();
         noteDto.setContent(content);
@@ -116,9 +116,9 @@ public class NoteController {
             @RequestParam(value = "content") String content,
             @RequestParam(value = "publicNote", required = false) String publicNote) {
 
-        String accessType = "private";
+        NoteAccessType accessType = NoteAccessType.PRIVATE;
         if (publicNote != null) {
-            accessType = "public";
+            accessType = NoteAccessType.PUBLIC;
         }
         NoteDto noteDto = new NoteDto();
         noteDto.setId(id);

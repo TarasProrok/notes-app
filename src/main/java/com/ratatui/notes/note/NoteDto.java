@@ -18,7 +18,7 @@ public class NoteDto {
     private String title;
     private String content;
     private User noteOwner;
-    private String noteAccessType;
+    private NoteAccessType noteAccessType;
     private Instant createdDate;
     private Instant updatedDate;
     private List<Tag> tagList;

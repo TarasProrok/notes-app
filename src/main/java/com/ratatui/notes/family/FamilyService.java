@@ -12,9 +12,6 @@ import org.springframework.stereotype.Service;
 
 import static com.ratatui.notes.utils.Constants.FAMILY_CODE_LENGTH;
 
-/**
- * @author Andriy Gaponov
- */
 @Slf4j
 @RequiredArgsConstructor
 @Service
