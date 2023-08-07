@@ -80,7 +80,7 @@
                                 <label class="checkbox-ios">
                                     <label class="form-check-label" for="publicNote">Публічна</label>
                                     <input type="checkbox" id="publicNote" name="publicNote"
-                                           th:checked="${note.noteAccessType=='public'}">
+                                           th:checked="${note.noteAccessType.toString=='PUBLIC'}">
                                     <span class="checkbox-ios-switch"></span>
                                 </label>
                             </div>

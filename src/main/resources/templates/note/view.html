@@ -46,13 +46,13 @@
                             <label class="checkbox-ios">
                                 <label class="form-check-label" for="publicNote">Публічна</label>
                                 <input type="checkbox" id="publicNote" name="publicNote"
-                                       th:checked="${note.noteAccessType=='public'}" disabled>
+                                       th:checked="${note.noteAccessType.toString=='PUBLIC'}" disabled>
                                 <span class="checkbox-ios-switch"></span>
                             </label>
                         </div>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                                th:style="(${note.noteAccessType} == 'private') ? 'visibility: hidden;' : 'visibility: visible;'">Поділитися</button>
+                                th:style="(${note.noteAccessType.toString} == 'PRIVATE') ? 'visibility: hidden;' : 'visibility: visible;'">Поділитися</button>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
