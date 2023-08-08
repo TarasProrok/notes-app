@@ -3,6 +3,7 @@ package com.ratatui.notes.note;
 import static com.ratatui.notes.utils.Constants.REDIRECT_URL_404;
 
 import com.ratatui.notes.user.User;
+import com.ratatui.notes.user.UserOptionsService;
 import com.ratatui.notes.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +36,7 @@ public class NoteController {
 
     private final NoteService noteService;
     private final UserService userService;
+    private final UserOptionsService userOptionsService;
     public static final String NOTE_UPDATE_TEMPLATE = "note/update";
     @Value("${note.page.size}")
     public static final int DEFAULT_PAGE_SIZE = 10;
@@ -60,7 +62,9 @@ public class NoteController {
 
     @GetMapping("/create")
     public ModelAndView createNoteViewPage() {
-        return new ModelAndView("note/create");
+        ModelAndView result = new ModelAndView("note/create");
+        result.addObject("options", userOptionsService.getOptions());
+        return result;
     }
 
     @GetMapping("/list")
@@ -82,6 +86,7 @@ public class NoteController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().toList();
             result.addObject("pageNumbers", pageNumbers);
         }
+        result.addObject("options", userOptionsService.getOptions());
         return result;
     }
 
@@ -90,6 +95,7 @@ public class NoteController {
         try {
             NoteDto noteDto = noteService.getById(id);
             model.addAttribute("note", noteDto);
+            model.addAttribute("options", userOptionsService.getOptions());
         } catch (EntityNotFoundException e) {
             return REDIRECT_URL_404;
         }
@@ -103,6 +109,7 @@ public class NoteController {
             NoteDto noteDto = noteService.getById(id);
             model.addAttribute("note", noteDto);
             model.addAttribute("sharedLink", noteService.getSharedLink(id, uriComponentsBuilder));
+            model.addAttribute("options", userOptionsService.getOptions());
         } catch (EntityNotFoundException e) {
             return REDIRECT_URL_404;
         }
@@ -145,6 +152,7 @@ public class NoteController {
         try {
             noteDto = noteService.getById(id);
             model.addAttribute("note", noteDto);
+            model.addAttribute("options", userOptionsService.getOptions());
         } catch (EntityNotFoundException e) {
             return REDIRECT_URL_404;
         }
@@ -181,6 +189,7 @@ public class NoteController {
     public String addTag(Model model, @RequestParam UUID id, @RequestParam String tagTitle) {
         NoteDto noteDto = noteService.addTag(id, tagTitle);
         model.addAttribute("note", noteDto);
+        model.addAttribute("options", userOptionsService.getOptions());
         return (NOTE_UPDATE_TEMPLATE);
     }
 
@@ -188,6 +197,7 @@ public class NoteController {
     public String deleteTag(Model model, @RequestParam UUID noteId, @RequestParam UUID tagId) {
         NoteDto noteDto = noteService.deleteTag(noteId, tagId);
         model.addAttribute("note", noteDto);
+        model.addAttribute("options", userOptionsService.getOptions());
         return (NOTE_UPDATE_TEMPLATE);
     }
 }

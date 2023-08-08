@@ -2,6 +2,7 @@ package com.ratatui.notes.user;
 
 import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
+import com.ratatui.notes.note.NoteAccessType;
 import com.ratatui.notes.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -48,7 +49,7 @@ public class UserService {
                            String password,
                            String nickname,
                            String birthDate,
-                           int gender) {
+                           int gender, String fullWidth) {
         User currentUser = getCurrentUser();
         UserDTO userDTO = userMapper.mapEntityToDto(currentUser);
         userDTO.setEmail(email);
@@ -57,6 +58,8 @@ public class UserService {
         }
         userDTO.setNickname(nickname);
         userDTO.setGenderId(gender);
+
+        userDTO.setFullWidth(fullWidth != null);
 
         if (!password.isBlank()) {
             if (!passwordEncoder.matches(password, currentUser.getPassword())) {
@@ -86,8 +89,13 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = principal.getUsername();
+        String username = "";
+        try {
+            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            username = principal.getUsername();
+        } catch (Exception e){
+            //NOP
+        }
         return findUserByName(username);
     }
 }

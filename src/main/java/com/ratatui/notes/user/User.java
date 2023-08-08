@@ -47,6 +47,8 @@ public class User {
         @Column(name = "role", nullable = false)
         @Enumerated(EnumType.STRING)
         private UserRoles role;
+        @Column(name = "full_width_page")
+        private boolean fullWidth;
 
         @Override
         public boolean equals(Object o) {
