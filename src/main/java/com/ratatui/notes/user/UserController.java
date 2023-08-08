@@ -21,6 +21,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final UserOptionsService userOptionsService;
 
 
     @GetMapping("/account")
@@ -36,6 +37,7 @@ public class UserController {
         result.addObject("family", userDTO.getFamily());
         result.addObject("gender", GENDERS);
         result.addObject("usersFamilyDtos", usersFamilyDtos);
+        result.addObject("options", userOptionsService.getOptions());
         return result;
     }
 
@@ -45,10 +47,11 @@ public class UserController {
                                       @RequestParam(value = "password") String password,
                                       @RequestParam(value = "nickname") String nickname,
                                       @RequestParam(value = "birthDate") String birthDate,
-                                      @RequestParam(value = "gender") int gender) {
+                                      @RequestParam(value = "gender") int gender,
+                                      @RequestParam(value = "fullWidth", required = false) String fullWidth) {
         RedirectView redirect = new RedirectView();
 
-        userService.updateUser(email, password, nickname, birthDate, gender);
+        userService.updateUser(email, password, nickname, birthDate, gender, fullWidth);
 
         redirect.setUrl("/account");
         if (!Objects.equals(oldEmail, email)) {

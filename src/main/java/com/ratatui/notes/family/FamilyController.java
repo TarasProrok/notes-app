@@ -1,6 +1,7 @@
 package com.ratatui.notes.family;
 
 import com.ratatui.notes.user.User;
+import com.ratatui.notes.user.UserOptionsService;
 import com.ratatui.notes.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ public class FamilyController {
 
     private final FamilyService familyService;
     private final UserService userService;
+    private final UserOptionsService userOptionsService;
 
     @GetMapping("/edit")
     public ModelAndView editUserFamilyShowPage() {
@@ -29,6 +31,7 @@ public class FamilyController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/edit");
         modelAndView.addObject("family", user.getFamily());
+        modelAndView.addObject("options", userOptionsService.getOptions());
         return modelAndView;
     }
 
@@ -66,6 +69,7 @@ public class FamilyController {
     public ModelAndView createFamilyShowPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("family/create");
+        modelAndView.addObject("options", userOptionsService.getOptions());
         return modelAndView;
     }
 

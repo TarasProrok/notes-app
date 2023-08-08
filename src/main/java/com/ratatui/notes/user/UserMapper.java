@@ -24,6 +24,7 @@ public class UserMapper implements Mapper<User, UserDTO> {
         target.setUpdatedDate(source.getUpdatedDate());
         target.setRole(source.getRole());
         target.setFamily(familyMapper.mapEntityToDto(source.getFamily()));
+        target.setFullWidth(source.isFullWidth());
         return target;
     }
 
@@ -42,6 +43,7 @@ public class UserMapper implements Mapper<User, UserDTO> {
         target.setUpdatedDate(source.getUpdatedDate());
         target.setRole(source.getRole());
         target.setFamily(familyMapper.mapDtoToEntity(source.getFamily()));
+        target.setFullWidth(source.isFullWidth());
         return target;
     }
 }

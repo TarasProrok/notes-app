@@ -29,4 +29,5 @@ public class UserDTO {
     @Enumerated(EnumType.STRING)
     private FamilyResponseDto family;
     private UserRoles role;
+    private boolean fullWidth;
 }
