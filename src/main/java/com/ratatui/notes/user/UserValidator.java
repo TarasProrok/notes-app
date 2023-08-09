@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.NoSuchElementException;
+
 @RequiredArgsConstructor
 @Component
 public class UserValidator {
@@ -31,9 +33,11 @@ public class UserValidator {
         if (StringUtils.isBlank(email)) {
             errorMessages.addError("Пошта не може бути порожнюю!");
         } else {
-            User byUsername = userService.findUserByName(email);
-            if (byUsername != null){
+            try {
+                userService.findUserByName(email);
                 errorMessages.addError("Користувач з поштою " + email + " вже зареєстрований");
+            } catch (NoSuchElementException ex){
+                //nop
             }
         }
     }

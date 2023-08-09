@@ -44,16 +44,7 @@ public class AuthController {
             errorsMessages.addError("Користувач вже зареєстрований. Ви можете увійти.");
             return "user/login";
         } catch (NoSuchElementException e) {
-            UserDTO userDTO = UserDTO.builder()
-                    .email(username)
-                    .password(passwordEncoder.encode(password))
-                    .nickname(nickname)
-                    .isEnable(true)
-                    .genderId(0)
-                    .role(UserRoles.ROLE_USER)
-                    .build();
-
-            userService.createNewUser(userDTO);
+            userService.createNewUser(username, password, nickname);
             infoMessages.addMessage("Ви успішно зареєструвалися. Можете увійти.");
             return "user/login";
         }
