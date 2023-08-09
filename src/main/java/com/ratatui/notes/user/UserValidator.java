@@ -49,7 +49,7 @@ public class UserValidator {
 
         String passwordRegexPattern = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,})";
         if (!Helper.patternMatches(password, passwordRegexPattern)) {
-            errorMessages.addError("Не вірний формат паролю! Довжина паролю повинна бути не меньше 8 символів, латинські літери та цифри.");
+            errorMessages.addError("Не вірний формат паролю! Довжина паролю повинна бути не меньше 8 символів, латинські літери та цифри. Мінімум одна велика літера.");
         }
     }
 }
