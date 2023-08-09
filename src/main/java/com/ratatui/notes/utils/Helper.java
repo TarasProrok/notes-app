@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public final class Helper {
 
@@ -35,5 +36,11 @@ public final class Helper {
     public static LocalDate getLocalDateFromString(String stringDate) {
         DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.from(europeanDateFormatter.parse(stringDate));
+    }
+
+    public static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
     }
 }
