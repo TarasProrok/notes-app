@@ -2,7 +2,6 @@ package com.ratatui.notes.user;
 
 import com.ratatui.notes.family.Family;
 import com.ratatui.notes.note.Note;
-import com.ratatui.notes.note.NoteAccessType;
 import com.ratatui.notes.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -22,13 +21,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final UserValidator userValidator;
 
     public List<User> getFamilyUsers(Family family) {
         return userRepository.findAllByFamily(family);
-    }
-
-    public void deleteUserById(UUID id) {
-        userRepository.deleteById(id);
     }
 
     public User findUserById(UUID id) {
@@ -42,6 +38,8 @@ public class UserService {
     public void updateUser(UserDTO userDTO) {
         UserDTO dto = userMapper.mapEntityToDto(findUserById(userDTO.getId()));
         BeanUtils.copyProperties(userDTO, dto, Helper.getNullPropertyNames(userDTO));
+        userValidator.setUserService(this);
+        userValidator.validate(dto, false);
         userRepository.save(userMapper.mapDtoToEntity(dto));
     }
 
@@ -75,7 +73,18 @@ public class UserService {
         userRepository.save(userById);
     }
 
-    public void createNewUser(UserDTO userDTO) {
+    public void createNewUser(String username, String password, String nickname) {
+        UserDTO userDTO = UserDTO.builder()
+                .email(username)
+                .password(password)
+                .nickname(nickname)
+                .isEnable(true)
+                .genderId(0)
+                .role(UserRoles.ROLE_USER)
+                .build();
+        userValidator.setUserService(this);
+        userValidator.validate(userDTO, true);
+        userDTO.setPassword(passwordEncoder.encode(password));
         User user = userMapper.mapDtoToEntity(userDTO);
         userRepository.save(user);
     }
@@ -93,7 +102,7 @@ public class UserService {
         try {
             UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             username = principal.getUsername();
-        } catch (Exception e){
+        } catch (Exception e) {
             //NOP
         }
         return findUserByName(username);
