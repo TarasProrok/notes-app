@@ -19,25 +19,27 @@ public class UserValidator {
     private UserService userService;
 
 
-    public void validate(UserDTO userDTO) {
+    public void validate(UserDTO userDTO, boolean newUser) {
         errorMessages.clear();
         checkPassword(userDTO.getPassword());
-        checkEmail(userDTO.getEmail());
+        checkEmail(userDTO.getEmail(), newUser);
 
         if (!errorMessages.getErrors().isEmpty()){
             throw new NoteValidationException(errorMessages);
         }
     }
 
-    private void checkEmail(String email){
+    private void checkEmail(String email, boolean newUser){
         if (StringUtils.isBlank(email)) {
             errorMessages.addError("Пошта не може бути порожнюю!");
         } else {
-            try {
-                userService.findUserByName(email);
-                errorMessages.addError("Користувач з поштою " + email + " вже зареєстрований");
-            } catch (NoSuchElementException ex){
-                //nop
+            if (newUser){
+                try {
+                    userService.findUserByName(email);
+                    errorMessages.addError("Користувач з поштою " + email + " вже зареєстрований");
+                } catch (NoSuchElementException ex){
+                    //nop
+                }
             }
         }
     }

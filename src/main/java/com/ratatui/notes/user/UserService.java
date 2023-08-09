@@ -39,7 +39,7 @@ public class UserService {
         UserDTO dto = userMapper.mapEntityToDto(findUserById(userDTO.getId()));
         BeanUtils.copyProperties(userDTO, dto, Helper.getNullPropertyNames(userDTO));
         userValidator.setUserService(this);
-        userValidator.validate(dto);
+        userValidator.validate(dto, false);
         userRepository.save(userMapper.mapDtoToEntity(dto));
     }
 
@@ -83,7 +83,7 @@ public class UserService {
                 .role(UserRoles.ROLE_USER)
                 .build();
         userValidator.setUserService(this);
-        userValidator.validate(userDTO);
+        userValidator.validate(userDTO, true);
         userDTO.setPassword(passwordEncoder.encode(password));
         User user = userMapper.mapDtoToEntity(userDTO);
         userRepository.save(user);
